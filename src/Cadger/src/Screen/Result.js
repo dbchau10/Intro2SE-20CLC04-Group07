@@ -88,7 +88,14 @@ const styles = StyleSheet.create({
   header: {
     height: 0.1*windowHeight,
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.0,
+    elevation: 1,
   },
   headerLogo: {
     flex: 1,
@@ -179,5 +186,6 @@ const styles = StyleSheet.create({
   },
   eleText: {
     textAlign: 'center',
+    color: 'black',
   },
 })

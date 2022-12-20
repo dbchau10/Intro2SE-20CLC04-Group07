@@ -70,14 +70,18 @@ const SignUp = ({navigation}) => {
       <View style={styles.signUpContainerButton}>
         <TouchableOpacity
           style={styles.btn1}
-          onPress={() => Alert.alert("Hello")}
+          onPress={() => {
+            // Process login
+            Alert.alert("Hello");
+            navigation.navigate('Login');
+            }}
         >
           <Text style={styles.btnText1}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btn2}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.btnText2}>Login</Text>
+          <Text style={styles.btnText2}>Back</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -96,10 +100,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signUpContainerInput: {
-    height: 0.5*windowHeight,
+    height: 0.45*windowHeight,
   },
   signUpContainerButton: {
-    windowHeight: 0.2*windowHeight,
+    windowHeight: 0.25*windowHeight,
     alignItems: 'center',
   },
   logoText: {
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   btn2: {
-    marginTop: 60,
+    marginTop: 40,
     width: 200,
     height: 50,
     alignItems: 'center',
