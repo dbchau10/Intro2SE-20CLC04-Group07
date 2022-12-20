@@ -17,7 +17,7 @@ import {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const Login: () => Node = () => {
+const Login =  ({navigation}) => {
   const [username, onChangeUsername] = React.useState(null);
   const [password, onChangePassword] = React.useState(null);
   return (
@@ -58,8 +58,7 @@ const Login: () => Node = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btn2}
-          onPress={() => Alert.alert("Hello")}
-        >
+          onPress={() => navigation.navigate('Register')}>
           <Text style={styles.btnText2}>Sign up</Text>
         </TouchableOpacity>
       </View>

@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'space-between'
   },
   header: {
     height: 0.1*windowHeight,
@@ -155,6 +156,7 @@ const styles = StyleSheet.create({
   },
   navbar: {
     height: 0.1*windowHeight,
+    width: windowWidth,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: "#000",

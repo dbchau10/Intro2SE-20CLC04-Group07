@@ -17,11 +17,11 @@ import {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const SignUp: () => Node = () => {
+const SignUp = ({navigation}) => {
   const [username, onChangeUsername] = React.useState(null);
   const [password, onChangePassword] = React.useState(null);
   const [email, onChangeEmail] = React.useState(null);
-  const [phne, onChangePhone] = React.useState(null);
+  const [phone, onChangePhone] = React.useState(null);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -73,6 +73,11 @@ const SignUp: () => Node = () => {
           onPress={() => Alert.alert("Hello")}
         >
           <Text style={styles.btnText1}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn2}
+          onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.btnText2}>Login</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

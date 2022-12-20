@@ -36,6 +36,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/Screen/Login';
 import SignUp from './src/Screen/SignUp';
 import Result from './src/Screen/Result';
+import Navigation from './src/components/Navigation';
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -45,7 +46,7 @@ const App: () => Node = () => {
   };
 
   return (
-    <Result />
+    <Navigation />
   );
 };
 
