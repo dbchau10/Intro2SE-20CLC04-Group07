@@ -22,32 +22,42 @@ const windowHeight = Dimensions.get('window').height;
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
-const ReturnItem: () => Node = () => {
-  const [date, onChangeDate] = React.useState(null);
-  const [place, onChangePlace] = React.useState(null);
+const BorrowItem: () => Node = () => {
+  const [reason, onChangeReason] = React.useState(null);
+  const [borrowDate, onChangeBorrowDate] = React.useState(null);
+  const [returnDate, onChangeReturnDate] = React.useState(null);
   const name = 'Laptop';
 
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.headerLogo}>Cadger</Text>
-            <Text style={styles.headerName}>Return item</Text>
+            <Text style={styles.headerName}>Borrow item</Text>
         </View>
         <View style={styles.body}>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.title}>Date</Text>
+          <Text style={styles.title}>Reasons</Text>
+          <TextInput 
+            multiline
+            numberOfLines={5}
+            style={styles.box}
+            onChangeText={onChangeReason}
+            value={reason}
+          />
+          <Text style={styles.title}>Borrow date</Text>
             <TextInput 
               style={styles.box}
-              onChangeText={onChangeDate}
-              value={date}
+              onChangeText={onChangeBorrowDate}
+              value={borrowDate}
               placeholder='e.g. 18/12/2022'
             />
-          <Text style={styles.title}>Place</Text>
-          <TextInput 
-            style={[styles.box, {height: 150,}]}
-            onChangeText={onChangePlace}
-            value={place}
-          />
+          <Text style={styles.title}>Return date</Text>
+            <TextInput 
+              style={styles.box}
+              onChangeText={onChangeReturnDate}
+              value={returnDate}
+              placeholder='e.g. 19/12/2022'
+            />
           <TouchableOpacity
           style={styles.btn}
           onPress={() => Alert.alert("Hello")}
@@ -84,7 +94,7 @@ const ReturnItem: () => Node = () => {
   )
 }
 
-export default ReturnItem;
+export default BorrowItem;
 
 const styles = StyleSheet.create({
   container: {

@@ -38,6 +38,9 @@ import SignUp from './src/Screen/SignUp';
 import Result from './src/Screen/Result';
 import PostItem from './src/Screen/PostItem';
 import ReturnItem from './src/Screen/ReturnItem';
+import RatingItem from './src/Screen/RatingItem';
+import BorrowItem from './src/Screen/BorrowItem';
+import ItemDetail from './src/Screen/ItemDetail';
 import Navigation from './src/components/Navigation';
 
 const App: () => Node = () => {
@@ -48,7 +51,7 @@ const App: () => Node = () => {
   };
 
   return (
-    <ReturnItem />
+    <ItemDetail />
   );
 };
 
