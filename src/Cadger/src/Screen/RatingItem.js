@@ -18,12 +18,12 @@ import {
 } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
+const green = '#98FB98';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
-const ReturnItem: () => Node = () => {
-  const [date, onChangeDate] = React.useState(null);
+const RatingItem: () => Node = () => {
+  const [rating, onChangeRating] = React.useState(null);
   const [place, onChangePlace] = React.useState(null);
   const name = 'Laptop';
 
@@ -31,20 +31,21 @@ const ReturnItem: () => Node = () => {
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.headerLogo}>Cadger</Text>
-            <Text style={styles.headerName}>Return item</Text>
+            <Text style={styles.headerName}>Rating item</Text>
         </View>
         <View style={styles.body}>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.title}>Date</Text>
+          <Text style={styles.title}>Rating</Text>
             <TextInput 
               style={styles.box}
-              onChangeText={onChangeDate}
-              value={date}
-              placeholder='e.g. 18/12/2022'
+              onChangeText={onChangeRating}
+              value={rating}
             />
-          <Text style={styles.title}>Place</Text>
+          <Text style={styles.title}>Comment</Text>
           <TextInput 
-            style={[styles.box, {height: 150,}]}
+            multiline
+            numberOfLines={5}
+            style={styles.box}
             onChangeText={onChangePlace}
             value={place}
           />
@@ -53,6 +54,12 @@ const ReturnItem: () => Node = () => {
           onPress={() => Alert.alert("Hello")}
           >
           <Text style={styles.btnText}>Submit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btnSkip}
+          onPress={() => Alert.alert("Hello")}
+          >
+          <Text style={styles.btnSkipText}>Skip</Text>
         </TouchableOpacity>
         </View>
         <View style={styles.navbar}>
@@ -84,7 +91,7 @@ const ReturnItem: () => Node = () => {
   )
 }
 
-export default ReturnItem;
+export default RatingItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -142,7 +149,7 @@ const styles = StyleSheet.create({
   btn: {
     width: 250,
     height: 50,
-    backgroundColor: '#98FB98',
+    backgroundColor: green,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
@@ -151,6 +158,22 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   btnText: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 22,
+  },
+  btnSkip: {
+    width: 100,
+    height: 40,
+    backgroundColor: 'gray',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    borderWidth: 1,
+    alignSelf: 'center',
+    marginTop: 150,
+  },
+  btnSkipText: {
     fontWeight: 'bold',
     color: 'white',
     fontSize: 22,
