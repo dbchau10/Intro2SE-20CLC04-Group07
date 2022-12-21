@@ -71,7 +71,7 @@ const SignUp = ({navigation}) => {
         <TouchableOpacity
           style={styles.btn1}
           onPress={() => {
-            // Process login
+            // Process sign up
             Alert.alert("Hello");
             navigation.navigate('Login');
             }}

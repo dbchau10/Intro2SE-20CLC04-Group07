@@ -20,6 +20,11 @@ const Navigation = () => {
           component={SignUp}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="Result"
+          component={Result}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

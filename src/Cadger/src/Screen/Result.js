@@ -13,16 +13,85 @@ import {
   Alert,
   TouchableOpacity,
   Dimensions,
+  FlatList,
+  Image,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+const green = '#98FB98';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
+const DATA = [
+  {
+    id: 1,
+    title: 'Laptop cũ phục vụ học tập',
+    status: 1,
+    rating: 5.0,
+    borrowed: 200,
+  },
+  {
+    id: 2,
+    title: 'Second Item',
+    status: 1,
+    rating: 5.0,
+    borrowed: 200,
+  },
+  {
+    id: 3,
+    title: 'Third Item',
+    status: 1,
+    rating: 5.0,
+    borrowed: 200,
+  },
+  {
+    id: 4,
+    title: 'Fourth Item',
+    status: 1,
+    rating: 5.0,
+    borrowed: 200,
+  },
+  {
+    id: 5,
+    title: 'Fifth Item',
+    status: 1,
+    rating: 5.0,
+    borrowed: 200,
+  },
+  {
+    id: 6,
+    title: 'Sixth Item',
+    status: 1,
+    rating: 5.0,
+    borrowed: 200,
+  },
+];
+
+const Item = ({ item }) => (
+  <View style={styles.itemBox}>
+    <View style={styles.itemContentBox}>
+      <Image source = {{uri:'https://cdn.pocket-lint.com/r/s/970x/assets/images/149624-laptops-review-hands-on-microsoft-surface-laptop-3-13-5-inch-review-image1-ndijeqz6fw.jpg'}}
+      style = {{ width: '90%', height: '80%', alignSelf: 'center', marginVertical: '8%', borderRadius: 10, resizeMode: 'center'}}
+      />  
+    </View>
+    <View style={styles.itemContentBox}>
+      <Text style={styles.itemTitle}>{item.title}</Text>
+      <View style={styles.itemStatusBox}>
+        <Text style={styles.itemStatusText}>{item.status?'Available':'Unavailable'}</Text>
+      </View>
+      <Text style={styles.itemRating}>{item.rating} <Icon style={styles.eleIcon} name='star' size={16} color='yellow'/></Text>
+      <Text style={styles.itemBorrowed}>{item.borrowed} borrowed</Text>
+    </View>
+  </View>
+);
+
 const Result: () => Node = () => {
   const [isSelected, setSelection] = React.useState(false);
+  const renderItem = ({ item }) => (
+    <Item item={item} />
+  );
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -45,9 +114,29 @@ const Result: () => Node = () => {
                 <Text style={styles.filterContent}>Unavailable</Text>
             </View>
         </View>
-        <View style={styles.productContainer}>
-
-        </View>
+        <SafeAreaView style={styles.productContainer}>
+          <Text style={styles.productTitle}>Products</Text>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+            style={styles.btn}
+            onPress={() => Alert.alert("Hello")}
+            >
+            <Text style={styles.btnText}>Previous</Text>
+            </TouchableOpacity>
+            <Text style={styles.pageText}>1/10</Text>
+            <TouchableOpacity
+            style={styles.btn}
+            onPress={() => Alert.alert("Hello")}
+            >
+            <Text style={styles.btnText}>Next</Text>
+          </TouchableOpacity>
+          </View>
+          <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          />
+        </SafeAreaView>
         <View style={styles.navbar}>
             <View style={styles.eleBox}>
                 <Icon style={styles.eleIcon} name='home-outline' size={35} color='black' />
@@ -59,7 +148,7 @@ const Result: () => Node = () => {
             </View>
             <View style={styles.eleBox}>
                 <View style={[styles.eleIcon,
-                {width: 60, height: 60, backgroundColor: '#98FB98', marginBottom: 60, borderRadius: 60, justifyContent: 'center', alignItems: 'center', borderWidth: 3, borderColor: 'white'}]}>
+                {width: 60, height: 60, backgroundColor: green, marginBottom: 60, borderRadius: 60, justifyContent: 'center', alignItems: 'center', borderWidth: 3, borderColor: 'white'}]}>
                   <Icon2 styles={styles.eleText} name='plus' size={35} color='white' />
                 </View>
             </View>
@@ -88,14 +177,7 @@ const styles = StyleSheet.create({
   header: {
     height: 0.1*windowHeight,
     flexDirection: 'row',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1.0,
-    elevation: 1,
+    borderBottomWidth: 1,
   },
   headerLogo: {
     flex: 1,
@@ -103,7 +185,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingLeft: 20,
     fontSize: 40,
-    color: '#98FB98',
+    color: green,
     fontWeight: 'bold',
     fontFamily: 'Changa One',
   },
@@ -118,7 +200,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Changa One',
   },
   searchContainer: {
-    height: 0.2*windowHeight,
+    height: 0.12*windowHeight,
   },
   searchBox: {
     alignSelf: 'center',
@@ -159,7 +241,85 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   productContainer: {
-    height: 0.6*windowHeight,
+    height: 0.68*windowHeight,
+  },
+  productTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'black',
+    paddingLeft: 20,
+    paddingTop: 5,
+  },
+  btnContainer: {
+    height: 0.08*windowHeight,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    paddingTop: 20,
+  },
+  btn: {
+    height: 0.035*windowHeight,
+    width: 0.2*windowWidth,
+    backgroundColor: green,
+    justifyContent: 'center',
+    borderRadius: 20,
+  },
+  btnText: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  pageText: {
+    color: 'black',
+    paddingTop: 5,
+    marginHorizontal: 10,
+    fontWeight: 'bold',
+  },
+  itemBox: {
+    height: 0.15*windowHeight,
+    width: 0.9*windowWidth,
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    borderRadius: 20,
+    marginVertical: 7,
+    flexDirection: 'row',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 1.0,
+    shadowRadius: 1.0,
+    elevation: 5,
+  },
+  itemContentBox: {
+    width: '50%',
+    paddingHorizontal: 5,
+  },
+  itemTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    paddingTop: 10,
+    color: 'black',
+    height: 50,
+  },
+  itemStatusBox: {
+    marginVertical: 5,
+    height: 20,
+    width: 80,
+    backgroundColor: green,
+    borderRadius: 10, 
+  },
+  itemStatusText: {
+    textAlign: 'center',
+    color: 'black',
+  },
+  itemRating: {
+    textAlign: 'right',
+    paddingRight: 5,
+  },
+  itemBorrowed: {
+    textAlign: 'right',
+    paddingRight: 5,
   },
   navbar: {
     height: 0.1*windowHeight,

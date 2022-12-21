@@ -36,6 +36,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/Screen/Login';
 import SignUp from './src/Screen/SignUp';
 import Result from './src/Screen/Result';
+import PostItem from './src/Screen/PostItem';
+import ReturnItem from './src/Screen/ReturnItem';
 import Navigation from './src/components/Navigation';
 
 const App: () => Node = () => {
@@ -46,7 +48,7 @@ const App: () => Node = () => {
   };
 
   return (
-    <Result />
+    <ReturnItem />
   );
 };
 
