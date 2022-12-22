@@ -42,6 +42,7 @@ import RatingItem from './src/Screen/RatingItem';
 import BorrowItem from './src/Screen/BorrowItem';
 import ItemDetail from './src/Screen/ItemDetail';
 import Navigation from './src/components/Navigation';
+import Homepage from './src/Screen/Homepage';
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -51,7 +52,7 @@ const App: () => Node = () => {
   };
 
   return (
-    <Navigation />
+    <Homepage />
   );
 };
 
