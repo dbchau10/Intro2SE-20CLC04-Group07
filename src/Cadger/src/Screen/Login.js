@@ -55,7 +55,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.btn2}
           onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.btnText2}>Sign up</Text>
+          <Text style={styles.btnText2}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

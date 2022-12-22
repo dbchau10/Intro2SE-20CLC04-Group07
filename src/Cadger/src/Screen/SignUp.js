@@ -1,12 +1,8 @@
 import React from 'react';
-import type {Node} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   TextInput,
   KeyboardAvoidingView,
@@ -81,7 +77,7 @@ const SignUp = ({navigation}) => {
         <TouchableOpacity
           style={styles.btn2}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.btnText2}>Back</Text>
+          <Text style={styles.btnText2}>Login</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -96,21 +92,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   signUpContainerLogo: {
-    height: 0.3*windowHeight,
+    height: 0.25*windowHeight,
     alignItems: 'center',
   },
   signUpContainerInput: {
-    height: 0.45*windowHeight,
+    height: 0.43*windowHeight,
   },
   signUpContainerButton: {
-    windowHeight: 0.25*windowHeight,
+    windowHeight: 0.32*windowHeight,
     alignItems: 'center',
   },
   logoText: {
     fontSize: 50,
     color: '#98FB98',
     fontWeight: 'bold',
-    fontFamily: 'Changa One',
+    fontFamily: 'ChangaOne-Regular',
   },
   bigLogo: {
     marginTop: 100,
@@ -125,7 +121,6 @@ const styles = StyleSheet.create({
     height: 35,
     marginLeft: 80,
     marginVertical: 10,
-    borderWidth: 1,
     padding: 10,
     borderRadius: 20,
     width: 250,
@@ -137,8 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#98FB98',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
-    borderWidth: 1,
+    borderRadius: 20
   },
   btnText1: {
     fontWeight: 'bold',
@@ -146,8 +140,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   btn2: {
-    marginTop: 40,
-    width: 200,
+    marginTop: 30,
+    width: 250,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
