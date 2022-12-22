@@ -51,7 +51,7 @@ const App: () => Node = () => {
   };
 
   return (
-    <ItemDetail />
+    <Navigation />
   );
 };
 

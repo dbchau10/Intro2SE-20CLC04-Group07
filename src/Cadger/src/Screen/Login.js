@@ -1,12 +1,8 @@
 import React from 'react';
-import type {Node} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   TextInput,
   KeyboardAvoidingView,
@@ -17,12 +13,12 @@ import {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const Login =  ({navigation}) => {
+const Login = ({navigation}) => {
   const [username, onChangeUsername] = React.useState(null);
   const [password, onChangePassword] = React.useState(null);
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
       <View style={styles.loginContainerLogo}>
         <View style={styles.bigLogo}>
@@ -46,14 +42,14 @@ const Login =  ({navigation}) => {
             style={styles.input}
             onChangeText={onChangePassword}
             value={password}
+            secureTextEntry
           />
         </SafeAreaView>
       </View>
       <View style={styles.loginContainerButton}>
         <TouchableOpacity
           style={styles.btn1}
-          onPress={() => Alert.alert("Hello")}
-        >
+          onPress={() => Alert.alert('Hello')}>
           <Text style={styles.btnText1}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -63,32 +59,32 @@ const Login =  ({navigation}) => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
 export default Login;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   loginContainerLogo: {
-    height: 0.3*windowHeight,
+    height: 0.3 * windowHeight,
     alignItems: 'center',
   },
   loginContainerInput: {
-    height: 0.3*windowHeight,
+    height: 0.3 * windowHeight,
   },
   loginContainerButton: {
-    windowHeight: 0.4*windowHeight,
+    windowHeight: 0.4 * windowHeight,
     alignItems: 'center',
   },
   logoText: {
     fontSize: 50,
     color: '#98FB98',
     fontWeight: 'bold',
-    fontFamily: 'Changa One',
+    fontFamily: 'ChangaOne-Regular',
   },
   bigLogo: {
     marginTop: 100,
@@ -101,10 +97,10 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 35,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     marginLeft: 80,
     marginVertical: 15,
-    borderWidth: 1,
-    padding: 10,
     borderRadius: 20,
     width: 250,
     backgroundColor: '#EBEBEB',
@@ -116,7 +112,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
-    borderWidth: 1,
   },
   btnText1: {
     fontWeight: 'bold',
@@ -124,8 +119,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   btn2: {
-    marginTop: 60,
-    width: 200,
+    marginTop: 30,
+    width: 250,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
@@ -136,5 +131,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     fontSize: 20,
-  },
-})
+  }
+});
