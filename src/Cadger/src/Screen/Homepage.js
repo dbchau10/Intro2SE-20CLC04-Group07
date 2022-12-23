@@ -40,7 +40,7 @@ const Homepage = () => {
           <TextInput
             style={styles.input}
           />
-          <TouchableOpacity>
+          <TouchableOpacity style={{padding: 5}}>
             <Text><Icon name='search' size={14} color='black'/></Text>
       </TouchableOpacity>
       </View>
@@ -109,13 +109,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   input: {
-    width: 200
+    width: 200,
+    height: 30,
+    paddingVertical: 5,
+    fontSize: 10
   },
   search: {
     justifyContent: 'center',
     flexDirection: 'row',
-    height: 40,
-    paddingVertical: 10,
     paddingHorizontal: 20,
     marginVertical: 15,
     borderRadius: 20,
