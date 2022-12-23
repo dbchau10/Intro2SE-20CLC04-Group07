@@ -26,7 +26,7 @@ const ItemCard = ({ item }) => (
         <Text style={styles.itemStatusText}>{item.status?'Available':'Unavailable'}</Text>
       </View>
       <View style={styles.itemDescription}>
-      <Text style={styles.itemRating}>{item.rating} <Icon style={styles.eleIcon} name='star' size={16} color='yellow'/></Text>
+      <Text style={styles.itemRating}>{item.rating} <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/></Text>
       <Text style={styles.itemBorrowed}>{item.borrowed} borrowed</Text>
       </View>
     </View>
