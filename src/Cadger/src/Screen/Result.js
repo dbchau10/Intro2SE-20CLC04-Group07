@@ -274,53 +274,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontWeight: 'bold',
   },
-  itemBox: {
-    height: 0.15*windowHeight,
-    width: 0.9*windowWidth,
-    backgroundColor: 'white',
-    alignSelf: 'center',
-    borderRadius: 20,
-    marginVertical: 7,
-    flexDirection: 'row',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 1.0,
-    shadowRadius: 1.0,
-    elevation: 5,
-  },
-  itemContentBox: {
-    width: '50%',
-    paddingHorizontal: 5,
-  },
-  itemTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    paddingTop: 10,
-    color: 'black',
-    height: 50,
-  },
-  itemStatusBox: {
-    marginVertical: 5,
-    height: 20,
-    width: 80,
-    backgroundColor: green,
-    borderRadius: 10, 
-  },
-  itemStatusText: {
-    textAlign: 'center',
-    color: 'black',
-  },
-  itemRating: {
-    textAlign: 'right',
-    paddingRight: 5,
-  },
-  itemBorrowed: {
-    textAlign: 'right',
-    paddingRight: 5,
-  },
   navbar: {
     height: 0.1*windowHeight,
     width: windowWidth,

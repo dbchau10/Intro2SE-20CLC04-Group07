@@ -1,7 +1,7 @@
 import React from 'react';
 import type {Node} from 'react';
 import {
-    ScrollView,
+  ScrollView,
   SafeAreaView,
   StyleSheet,
   StatusBar,
@@ -19,7 +19,8 @@ const windowHeight = Dimensions.get('window').height;
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {parameters} from '../global/style';
-
+import { ItemData } from '../global/data';
+import ItemCard from '../components/ItemCard';
 const Homepage = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -53,6 +54,14 @@ const Homepage = () => {
             </View>
           </View>
            </ScrollView>
+
+           <View>
+          <FlatList
+            data={ItemData}
+            keyExtractor={item => item.id}
+            renderItem={ItemCard}
+          />
+        </View>
         <StatusBar style="light" backgroundColor="#33a333" translucent={true} />
     </SafeAreaView>
   );
