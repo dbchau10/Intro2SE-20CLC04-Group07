@@ -1,5 +1,6 @@
-import React from 'react';
-import type {Node} from 'react';
+/* eslint-disable prettier/prettier */
+/* eslint-disable jsx-quotes */
+import React, {useEffect} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -13,19 +14,24 @@ import {
   Dimensions,
   FlatList,
   Image,
+  LogBox
 } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const green = '#98FB98';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon2 from 'react-native-vector-icons/Ionicons';
+import Navbar from '../components/Navbar';
 import {parameters} from '../global/style';
 import { ItemData } from '../global/data';
 import ItemCard from '../components/ItemCard';
-const Homepage = () => {
+const Homepage = ({navigation}) => {
+    useEffect(() => {
+        LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
+      }, [])
   return (
     <SafeAreaView style={styles.container}>
-        <ScrollView bounces={false}>
+        <ScrollView 
+        bounces={false}>
         <View style={styles.header}>
           <View style={styles.welcome}>
           <Image
@@ -67,37 +73,13 @@ const Homepage = () => {
             renderItem={ItemCard}
           />
         </View>
-       
+
         <StatusBar style="light" backgroundColor="#33a333" translucent={true} />
         </ScrollView>
-        <View style={styles.navbar}>
-            <View style={styles.eleBox}>
-                <Icon2 style={styles.eleIcon} name='home-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Home</Text>
-            </View>
-            <View style={styles.eleBox}>
-                <Icon2 style={styles.eleIcon} name='mail-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Request</Text>
-            </View>
-            <View style={styles.eleBox}>
-                <View style={[styles.eleIcon,
-                {width: 60, height: 60, backgroundColor: green, marginBottom: 60, borderRadius: 60, justifyContent: 'center', alignItems: 'center', borderWidth: 3, borderColor: 'white'}]}>
-                  <Icon styles={styles.eleText} name='plus' size={35} color='white' />
-                </View>
-            </View>
-            <View style={styles.eleBox}>
-                <Icon2 style={styles.eleIcon} name='notifications-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Notification</Text>
-            </View>
-            <View style={styles.eleBox}>
-                <Icon2 style={styles.eleIcon} name='person-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Account</Text>
-            </View>
-        </View>
+        <Navbar />
     </SafeAreaView>
   );
 };
-
 export default Homepage;
 
 const styles = StyleSheet.create({
@@ -109,7 +91,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: "#98FB98",
-    height: parameters.headerHeight,
+    height: parameters.headerHeight
   },
   welcome: {
     padding: 20,
@@ -177,37 +159,6 @@ const styles = StyleSheet.create({
   searchArea: {
     alignItems: 'center',
     zIndex: 1
-  },
-  navbar: {
-    height: 0.1*windowHeight,
-    width: windowWidth,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 1,
-      height: 10,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 12.35,
-    elevation: 18,
-    flexDirection: 'row',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    backgroundColor: 'white'
-  },
-  eleBox: {
-    width: 0.2*windowWidth,
-    height: '100%',
-    justifyContent: 'center',
-  },
-  eleIcon: {
-    alignSelf: 'center',
-  },
-  eleText: {
-    textAlign: 'center',
-    color: 'black',
-  },
+  }
   
 })

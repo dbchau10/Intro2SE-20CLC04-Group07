@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -43,16 +42,13 @@ import BorrowItem from './src/Screen/BorrowItem';
 import ItemDetail from './src/Screen/ItemDetail';
 import Navigation from './src/components/Navigation';
 import Homepage from './src/Screen/Homepage';
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+import Tabs from './src/components/Tabs';
+const App = () => {
   return (
-    <Homepage />
+  //  <NavigationContainer>
+  //   <Tabs />
+  //  </NavigationContainer>
+  <Homepage />
   );
 };
 

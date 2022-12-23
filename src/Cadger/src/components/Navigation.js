@@ -6,6 +6,8 @@ const Stack = createNativeStackNavigator();
 import Login from '../Screen/Login';
 import SignUp from '../Screen/SignUp';
 import Result from '../Screen/Result';
+import Homepage from '../Screen/Homepage';
+import Tabs from './Tabs';
 const Navigation = () => {
   return (
     <NavigationContainer>
@@ -23,6 +25,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Result"
           component={Result}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Homepage"
+          component={Homepage}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
