@@ -73,3 +73,50 @@ create table rating(
     comment varchar(100),
     primary key(rating_id)
 );
+
+alter table log
+	add constraint LK_log_account
+	foreign key (borrower)
+	references account(username);
+
+alter table log
+	add constraint LK_log_item
+	foreign key (item_id)
+	references item(item_id);
+
+alter table item
+	add constraint LK_item_account
+	foreign key (lender)
+	references account(username);
+
+alter table report
+	add constraint LK_report_account
+	foreign key (sender)
+	references account(username);
+
+alter table borrowRequest
+	add constraint LK_borrowRequest_account
+	foreign key (borrower)
+	references account(username);
+
+alter table borrowRequest
+	add constraint LK_borrowRequest_item
+	foreign key (item_id)
+	references item(item_id);
+
+alter table notification
+	add constraint LK_notification_account
+	foreign key (username)
+	references account(username);
+
+alter table return
+	add constraint LK_return_account
+	foreign key (borrower)
+	references account(username);
+
+alter table return
+	add constraint LK_return_item
+	foreign key (item_id)
+	references item(item_id);
+
+set datestyle = European;
