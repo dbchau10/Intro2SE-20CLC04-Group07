@@ -10,7 +10,6 @@ import Homepage from '../Screen/Homepage';
 import Tabs from './Tabs';
 const Navigation = () => {
   return (
-    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
@@ -23,17 +22,11 @@ const Navigation = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Result"
-          component={Result}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Homepage"
-          component={Homepage}
+          name="Tabs"
+          component={Tabs}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 

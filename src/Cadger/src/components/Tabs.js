@@ -10,6 +10,7 @@ import PostItem from '../Screen/PostItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import ItemDetail from '../Screen/ItemDetail';
+import Navigation from './Navigation';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const CustomTabBarButton = ({children, onPress}) => (
@@ -21,6 +22,7 @@ const Tabs = () => {
   return (
     <Tab.Navigator
     screenOptions={{
+      headerShown: false,
       tabBarStyle: { 
         position: 'absolute',
         elevation: 10,
@@ -30,7 +32,8 @@ const Tabs = () => {
       height: 70,
     ...styles.shadow },
     }}>
-      <Tab.Screen name="Home" component={Homepage} options={{
+
+      <Tab.Screen name="Home" component={Homepage}  options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>
             <Icon2 style={{
@@ -113,7 +116,8 @@ const Tabs = () => {
         tabBarLabel:() => {return null},
         
       }}/>
-      
+
+
     </Tab.Navigator>
   );
 };

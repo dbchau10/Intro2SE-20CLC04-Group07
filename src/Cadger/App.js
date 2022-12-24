@@ -46,8 +46,9 @@ import Tabs from './src/components/Tabs';
 const App = () => {
   return (
    <NavigationContainer>
-    <Tabs />
+    <Navigation />
    </NavigationContainer>
+  // <Navigation />
   // <Homepage />
   );
 };
