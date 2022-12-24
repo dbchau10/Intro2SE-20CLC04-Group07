@@ -65,31 +65,6 @@ const BorrowItem: () => Node = () => {
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
         </View>
-        <View style={styles.navbar}>
-            <View style={styles.eleBox}>
-                <Icon style={styles.eleIcon} name='home-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Home</Text>
-            </View>
-            <View style={styles.eleBox}>
-                <Icon style={styles.eleIcon} name='mail-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Request</Text>
-            </View>
-            <View style={styles.eleBox}>
-                <View style={[styles.eleIcon,
-                {width: 60, height: 60, backgroundColor: '#98FB98', marginBottom: 60, borderRadius: 60, justifyContent: 'center', alignItems: 'center', borderWidth: 3, borderColor: 'white'}]}>
-                  <Icon2 styles={styles.eleText} name='plus' size={35} color='white' />
-                </View>
-            </View>
-            <View style={styles.eleBox}>
-                <Icon style={styles.eleIcon} name='notifications-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Notification</Text>
-            </View>
-            <View style={styles.eleBox}>
-                <Icon style={styles.eleIcon} name='person-outline' size={35} color='black' />
-                <Text style={styles.eleText}>Account</Text>
-            </View>
-            
-        </View>
     </SafeAreaView>
   )
 }

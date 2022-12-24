@@ -45,10 +45,10 @@ import Homepage from './src/Screen/Homepage';
 import Tabs from './src/components/Tabs';
 const App = () => {
   return (
-  //  <NavigationContainer>
-  //   <Tabs />
-  //  </NavigationContainer>
-  <Homepage />
+   <NavigationContainer>
+    <Tabs />
+   </NavigationContainer>
+  // <Homepage />
   );
 };
 

@@ -76,7 +76,6 @@ const Homepage = ({navigation}) => {
 
         <StatusBar style="light" backgroundColor="#33a333" translucent={true} />
         </ScrollView>
-        <Navbar />
     </SafeAreaView>
   );
 };
