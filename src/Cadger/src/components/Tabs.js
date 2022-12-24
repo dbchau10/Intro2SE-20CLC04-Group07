@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import ItemDetail from '../Screen/ItemDetail';
 import Navigation from './Navigation';
+import PersonalPage from '../Screen/PersonalPage';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const CustomTabBarButton = ({children, onPress}) => (
@@ -98,7 +99,7 @@ const Tabs = () => {
         tabBarLabel:() => {return null},
         
       }}/>
-      <Tab.Screen name="Account" component={Homepage}
+      <Tab.Screen name="Account" component={PersonalPage}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>
