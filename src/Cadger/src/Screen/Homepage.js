@@ -73,9 +73,8 @@ const Homepage = ({navigation}) => {
             renderItem={ItemCard}
           />
         </View>
-
-        <StatusBar style="light" backgroundColor="#33a333" translucent={true} />
         </ScrollView>
+        <StatusBar style="light" backgroundColor="#98FB98" translucent={true} />
     </SafeAreaView>
   );
 };
@@ -87,6 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingBottom: 30,
     paddingTop: parameters.statusBarHeight,
+    marginBottom: 50
   },
   header: {
     backgroundColor: "#98FB98",

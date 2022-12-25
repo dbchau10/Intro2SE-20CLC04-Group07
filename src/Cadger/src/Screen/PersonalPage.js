@@ -6,10 +6,8 @@ import {
     ScrollView,
     SafeAreaView,
     StyleSheet,
-    StatusBar,
     Text,
     View,
-    Button,
     TouchableOpacity,
     Dimensions,
     FlatList,
@@ -24,7 +22,7 @@ import {
   import {parameters} from '../global/style';
   import { ItemData } from '../global/data';
 import ItemPreviewCard from '../components/ItemPreviewCard';
-const PersonalPage = () => {
+const PersonalPage = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView 
@@ -90,7 +88,6 @@ const PersonalPage = () => {
             </TouchableOpacity>
         </View>
       </View>
-
       <View style={styles.info}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
         <Text style={styles.textHeading}>Lending List</Text>
@@ -106,13 +103,79 @@ const PersonalPage = () => {
             keyExtractor={item => item.id}
             renderItem={ItemPreviewCard}
           />
-          <View style={{padding: 10}}>
-          <Button  title="Create a new Post" color="#98FB98"
-            onPress={() => Alert.alert('Simple Button pressed')}
-            style={{margin: 10}}
-            ></Button>
+           <TouchableOpacity
+          style={styles.btn}>
+          <Text style={styles.btnText}>CREATE A NEW POST</Text>
+        </TouchableOpacity>
+        </View>
+
+        <View style={styles.info}>
+            <Text style={styles.textHeading}>Logs</Text>
+        <View>
+        <View style={styles.logHeading}>
+            <Text>Borrowing Logs</Text>
+            <TouchableOpacity>
+            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+            </TouchableOpacity>
+        </View>
+        <View style={styles.logItemBox}>
+            <View style={styles.logTitle}>
+                <Text>No.71</Text>
+                <View style={{flexDirection: 'row',alignItems: 'center'}}>
+                    <Text style={{paddingHorizontal: 5}}>alexxia</Text>
+                    <TouchableOpacity>
+                    <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={styles.logItem}>
+                <Image source={require('../../assets/pictures/laptop.jpg')}
+                    style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
+                 />
+                 <View style={styles.logItemDescription}>
+                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>Laptop cũ phục vụ học tập</Text>
+                    <Text>25/12/2022</Text>
+                </View>
+            </View>
+        </View>
+
+        <View style={styles.logHeading}>
+            <Text>Lending Logs</Text>
+            <TouchableOpacity>
+            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+            </TouchableOpacity>
+        </View>
+        <View style={styles.logItemBox}>
+            <View style={styles.logTitle}>
+                <Text>No.25</Text>
+                <View style={{flexDirection: 'row',alignItems: 'center'}}>
+                    <Text style={{paddingHorizontal: 5}}>alexxia</Text>
+                    <TouchableOpacity>
+                    <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={styles.logItem}>
+                <Image source={require('../../assets/pictures/camera.jpg')}
+                    style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
+                 />
+                 <View style={styles.logItemDescription}>
+                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>Camera chụp cực nét</Text>
+                    <Text>25/12/2022</Text>
+                </View>
+            </View>
+        </View>
+
         </View>
         </View>
+        <View style={{padding: 20}}>
+        <TouchableOpacity
+          style={styles.btnLogOut}
+          onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.btnText}>Log Out</Text>
+        </TouchableOpacity>
+        </View>
+       
     </ScrollView>
     </SafeAreaView>
   )
@@ -126,6 +189,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         paddingBottom: 30,
         paddingTop: parameters.statusBarHeight,
+        marginBottom: 50
       },
       header: {
         backgroundColor: "#98FB98",
@@ -203,5 +267,54 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         fontWeight: 'bold',
         color: 'black'
+      },
+      btn: {
+        marginVertical: 12,
+        width: '100%',
+        height: windowHeight*0.05,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#EBEBEB',
+        borderRadius: 10
+        
+      },
+      btnText: {
+        fontWeight: 'bold'
+      },
+      btnLogOut: {
+            width: '100%',
+            height: windowHeight*0.05,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#98FB98',
+            borderRadius: 10
+      },
+      logHeading: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#EBEBEB',
+        padding: 10,
+      },
+      logItem: {
+        flexDirection: 'row',
+        padding: 10
+      },
+      logItemDescription: {
+        flexDirection: 'column',
+        padding: 10
+      },
+      logTitle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderColor: 'lightgrey',
+      },
+      logItemBox: {
+        borderWidth: 1,
+        borderColor: 'lightgrey',
+        marginVertical: 10
+
       }
 })
