@@ -1,11 +1,33 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable space-infix-ops */
+/* eslint-disable semi */
 import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, TextInput, Dimensions, Image} from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
+import  { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon3 from 'react-native-vector-icons/FontAwesome';
+
+
 const EditProfile = () => {
+    const [name, onChangeName] = useState("Chau Dang");
+    const [date, onChangeDate] = useState(new Date());
+    const [show, setShow] = useState(false);
+    const [dob, onChangeDOB] = useState('14/10/2002')
+    const [email, onChangEmail] = useState('dbchau10@gmail.com')
+    const [phone, onChangePhone] = useState('+84919236800')
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        onChangeDate(currentDate);
+        let tempDate = new Date(currentDate);
+        let fDate = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/' + tempDate.getFullYear();
+        onChangeDOB(fDate);
+    }
+    const showDate = () => {
+        setShow(true);
+    }
   return (
     <View style={styles.container}>
       <View style={{margin: 20}}>
@@ -53,6 +75,8 @@ const EditProfile = () => {
             <Icon3 name="user-o" size={20} />
             <TextInput 
             placeholder="Name"
+            onChangeText={onChangeName}
+            value={name}
             placeholderTextColor="#666666"
             style={styles.textInput}
             />
@@ -65,18 +89,30 @@ const EditProfile = () => {
             />
         </View>
         <View style={styles.action}>
+        <TouchableOpacity onPress={() => showDate()}>
         <Icon3 name="calendar-o" size={20} />
+        </TouchableOpacity>
             <TextInput 
+            value={dob}
             placeholder="DOB"
             placeholderTextColor="#666666"
             style={styles.textInput}
             />
+            {/* {show && (
+                <DateTimePickerAndroid
+                value={date}
+                mode="date"
+                display="default"
+                onChange={onChange}
+                />
+            )} */}
         </View>
         <View style={styles.action}>
         <Icon3 name="envelope-o" size={20} />
             <TextInput 
             placeholder="Email"
             keyboardType="email-address"
+            value={email}
             placeholderTextColor="#666666"
             style={styles.textInput}
             />
@@ -85,6 +121,7 @@ const EditProfile = () => {
         <Icon3 name="phone" size={20} />
             <TextInput 
             placeholder="Tel"
+            value={phone}
             keyboardType="number-pad"
             placeholderTextColor="#666666"
             style={styles.textInput}
