@@ -18,6 +18,7 @@ import {
   const windowHeight = Dimensions.get('window').height;
   const green = '#98FB98';
   import Icon from 'react-native-vector-icons/MaterialIcons';
+  import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
   import Navbar from '../components/Navbar';
   import {parameters} from '../global/style';
   import { ItemData } from '../global/data';
@@ -41,51 +42,41 @@ const PersonalPage = ({navigation}) => {
       </View>
 
       <View style={styles.info}>
+        <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-between'}}>
         <Text style={styles.textHeading}>Personal Info</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
+        <Icon2 name='account-edit' size={20} color='lightgrey'/>
+        </TouchableOpacity>
+        </View>
         <View style={styles.fieldFirst}>
             <View style={{flexDirection:'row'}}>
             <Text>Name / </Text>
             <Text>Chau Dang</Text>
             </View>
-            <TouchableOpacity>
-            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-            </TouchableOpacity>
         </View>
         <View style={styles.field}>
             <View style={{flexDirection:'row'}}>
             <Text>Gender / </Text>
             <Text>Female</Text>
             </View>
-            <TouchableOpacity>
-            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-            </TouchableOpacity>
         </View>
         <View style={styles.field}>
             <View style={{flexDirection:'row'}}>
             <Text>DOB / </Text>
             <Text>14/10/2002</Text>
             </View>
-            <TouchableOpacity>
-            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-            </TouchableOpacity>
         </View>
         <View style={styles.field}>
             <View style={{flexDirection:'row'}}>
             <Text>Email / </Text>
             <Text>dbchau10@gmail.com</Text>
             </View>
-            <TouchableOpacity>
-            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-            </TouchableOpacity>
         </View>
         <View style={styles.fieldLast}>
         <View style={{flexDirection:'row'}}>
             <Text>Tel / </Text>
             <Text>+84919236800</Text>
             </View>
-            <TouchableOpacity>
-            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-            </TouchableOpacity>
         </View>
       </View>
       <View style={styles.info}>

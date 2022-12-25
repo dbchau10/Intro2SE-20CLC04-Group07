@@ -12,7 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 const ItemPreviewCard = ({ item }) => (
     <View style={styles.itemBox}>
     <Image source={item.imagePath}
-    style = {{ width: '100%', height: '50%'}}
+    style = {{ width: '100%', height: '50%', borderTopLeftRadius: 10}}
     />
     <Text style={styles.itemText}>{item.title}</Text>
     </View>
