@@ -9,13 +9,12 @@ import {
     StatusBar,
     Text,
     View,
-    TextInput,
-    Alert,
+    Button,
     TouchableOpacity,
     Dimensions,
     FlatList,
     Image,
-    LogBox
+    Alert
   } from 'react-native';
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
@@ -24,6 +23,7 @@ import {
   import Navbar from '../components/Navbar';
   import {parameters} from '../global/style';
   import { ItemData } from '../global/data';
+import ItemPreviewCard from '../components/ItemPreviewCard';
 const PersonalPage = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -92,7 +92,26 @@ const PersonalPage = () => {
       </View>
 
       <View style={styles.info}>
-        <Text style={styles.textHeading}>Logs</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+        <Text style={styles.textHeading}>Lending List</Text>
+        <TouchableOpacity>
+        <Text style={{fontStyle: 'italic', padding: 10}}>View All</Text>
+        </TouchableOpacity>
+        </View>
+
+        <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={ItemData}
+            keyExtractor={item => item.id}
+            renderItem={ItemPreviewCard}
+          />
+          <View style={{padding: 10}}>
+          <Button  title="Create a new Post" color="#98FB98"
+            onPress={() => Alert.alert('Simple Button pressed')}
+            style={{margin: 10}}
+            ></Button>
+        </View>
         </View>
     </ScrollView>
     </SafeAreaView>
@@ -146,7 +165,8 @@ const styles = StyleSheet.create({
       },
 
       info: {
-        padding: 20
+        padding: 20,
+        flexDirection: 'column'
       },
       fieldFirst: {
         borderWidth: 1,
@@ -183,5 +203,5 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         fontWeight: 'bold',
         color: 'black'
-      },
+      }
 })
