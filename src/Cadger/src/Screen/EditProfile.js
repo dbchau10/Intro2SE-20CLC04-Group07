@@ -1,36 +1,41 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable space-infix-ops */
 /* eslint-disable semi */
-import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, TextInput, Dimensions, Image} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, TextInput, Dimensions, Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView} from 'react-native'
 import React, {useState} from 'react'
-import  { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon3 from 'react-native-vector-icons/FontAwesome';
+import {parameters} from '../global/style';
 
-
-const EditProfile = () => {
+const EditProfile = ({navigation}) => {
     const [name, onChangeName] = useState("Chau Dang");
     const [date, onChangeDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const [dob, onChangeDOB] = useState('14/10/2002')
     const [email, onChangEmail] = useState('dbchau10@gmail.com')
     const [phone, onChangePhone] = useState('+84919236800')
+
+    const [male,onChangeMale] = useState(false)
+    const [female,onChangeFemale] = useState(true)
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
+        setShow(false);
         onChangeDate(currentDate);
         let tempDate = new Date(currentDate);
         let fDate = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/' + tempDate.getFullYear();
         onChangeDOB(fDate);
+        
     }
     const showDate = () => {
         setShow(true);
     }
   return (
-    <View style={styles.container}>
-      <View style={{margin: 20}}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={{margin: 20}}>
         <View style={{alignItems: 'center'}}>
             <TouchableOpacity onPress={()=>{}}>
                 <View style={{
@@ -98,19 +103,21 @@ const EditProfile = () => {
             placeholderTextColor="#666666"
             style={styles.textInput}
             />
-            {/* {show && (
-                <DateTimePickerAndroid
+            {show && (
+                <DateTimePicker
                 value={date}
                 mode="date"
                 display="default"
                 onChange={onChange}
                 />
-            )} */}
+            )}
         </View>
         <View style={styles.action}>
+            
         <Icon3 name="envelope-o" size={20} />
             <TextInput 
             placeholder="Email"
+            onChangeText={onChangEmail}
             keyboardType="email-address"
             value={email}
             placeholderTextColor="#666666"
@@ -122,16 +129,17 @@ const EditProfile = () => {
             <TextInput 
             placeholder="Tel"
             value={phone}
+            onChangeText={onChangePhone}
             keyboardType="number-pad"
             placeholderTextColor="#666666"
             style={styles.textInput}
             />
         </View>
-        <TouchableOpacity style={styles.commandButton} onPress={()=>{}}>
-            <Text style={styles.panelButtonTitle}>SUBMIT</Text>
+        <TouchableOpacity style={styles.commandButton} onPress={()=> navigation.navigate('PersonalPage')}>
+            <Text style={{color:'white',fontWeight:'bold'}}>SUBMIT</Text>
         </TouchableOpacity>
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -140,83 +148,27 @@ export default EditProfile
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: 50
+        marginBottom: 50,
+        paddingBottom: 30,
+        paddingTop: parameters.statusBarHeight,
     },
     commandButton: {
-        padding: 15,
+        padding: 10,
         borderRadius: 10,
         backgroundColor: '#98FB98',
         alignItems: 'center',
         marginTop: 10
     },
-    panel: {
-        padding: 20,
-        backgroundColor: '#FFFFFF',
-        paddingTop: 20
-    },
-    header: {
-        backgroundColor: '#FFFFFF',
-        shadowColor: '#333333',
-        shadowOffset: {
-            width: -1,
-            height: -3
-        },
-        shadowRadius: 2,
-        shadowOpacity: 0.4,
-        paddingTop: 20,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
-    },
-    panelHeader: {
-        alignItems: 'center'
-    },
-    panelHandle: {
-        width: 40,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: '#00000040',
-        marginBottom: 10,
-    },
-    panelTitle: {
-        fontSize: 27,
-        height: 35
-    },
-    panelSubtitle: {
-        fontSize: 14,
-        color: 'gray',
-        height: 30,
-        marginBottom: 10
-    },
-    panelButton: {
-        padding: 13,
-        borderRadius: 10,
-        backgroundCOlor: '#FF6347',
-        alignItems: 'center',
-        marginVertical: 7
-    },
-    panelButtonTitle: {
-        fontSize: 17,
-        fontWeight: 'bold',
-        color: 'white'
-    },
     action: {
         flexDirection: 'row',
-        marginVertical: 10,
+        marginVertical: 5,
+        paddingHorizontal: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#f2f2f2',
-        paddingBottom: 5
-    },
-    actionError: {
-        flexDirection: 'row',
-        marginTop: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#FF0000',
-        paddingBottom: 5
+        borderBottomColor: 'lightgrey',
+        alignItems: 'center'
     },
     textInput: {
         flex: 1,
-        marginTop: -12,
-        paddingLeft: 10,
-        color: '#05375a'
+        paddingLeft: 10
     }
 })
