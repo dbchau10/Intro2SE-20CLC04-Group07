@@ -1,4 +1,4 @@
-create database cadgerdb;
+-- create database cadgerdb;
 
 create table account(
     username varchar(20),
@@ -6,8 +6,8 @@ create table account(
     name varchar(50),
     dob date,
     email varchar(30),
-    phone char(10),
-    gender bit,
+    phone varchar(11),
+    gender char(1),
     avatar varchar(50),
     primary key(username)
 );
@@ -22,11 +22,12 @@ create table log(
 
 create table item(
     item_id serial,
+    name varchar(50),
     lender varchar(20),
     img varchar(50),
     description varchar(100),
     rating decimal(2,1),
-    status bit,
+    status char(1),
     borrow_times smallint,
     primary key(item_id)
 );
@@ -65,12 +66,23 @@ create table return(
     primary key(return_id)
 );
 
-create table rating(
+create table itemRating(
     rating_id serial,
     item_id int,
-    borrower int,
+    borrower varchar(20),
     point smallint,
     comment varchar(100),
+    date date,
+    primary key(rating_id)
+);
+
+create table borrowerRating(
+    rating_id serial,
+    lender varchar(20),
+    borrower varchar(20),
+    point smallint,
+    comment varchar(100),
+    date date,
     primary key(rating_id)
 );
 
@@ -119,4 +131,23 @@ alter table return
 	foreign key (item_id)
 	references item(item_id);
 
-set datestyle = European;
+alter table itemRating
+	add constraint LK_itemRating_item
+	foreign key (item_id)
+	references item(item_id);
+
+alter table itemRating
+	add constraint LK_itemRating_account
+	foreign key (borrower)
+	references account(username);
+
+alter table borrowerRating
+	add constraint LK_borrowerRating_account
+	foreign key (lender)
+	references account(username);
+
+alter table borrowerRating
+	add constraint LK_borrowerRating_account2
+	foreign key (borrower)
+	references account(username);
+set datestyle = 'sql, dmy';

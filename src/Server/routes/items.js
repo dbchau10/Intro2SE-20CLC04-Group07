@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const itemsController = require('../controllers/ItemsController');
 
-// router.get('/', itemsController.read);
-// router.get('/create', itemsController.create);
-// router.get('/update', itemsController.update);
-// router.get('/delete', itemsController.delete);
+router.get('/search/:kw', itemsController.search);
+router.get('/getById/:id', itemsController.getById);
+router.post('/create', itemsController.create);
+router.put('/updateStatus/:id', itemsController.updateStatus);
+router.put('/updateRating/:id', itemsController.updateRating);
+router.delete('/delete/:id', itemsController.delete);
 
 module.exports = router;

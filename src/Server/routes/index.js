@@ -1,22 +1,22 @@
 const accountRouter = require('./accounts');
 const borrowrequestRouter = require('./borrowrequests');
 const itemRouter = require('./items');
-const logRouter = require('./logs');
-const notificationRouter = require('./notifications');
-const ratingRouter = require('./ratings');
-const reportRouter = require('./reports');
-const returnRouter = require('./returns');
+// const logRouter = require('./logs');
+// const notificationRouter = require('./notifications');
+// const ratingRouter = require('./ratings');
+// const reportRouter = require('./reports');
+// const returnRouter = require('./returns');
 
 function route(app) {
 
     app.use('/accounts', accountRouter);
     app.use('/borrowrequests', borrowrequestRouter);
     app.use('/items', itemRouter);
-    app.use('/logs', logRouter);
-    app.use('/notifications', notificationRouter);
-    app.use('/ratings', ratingRouter);
-    app.use('/reports', reportRouter);
-    app.use('/returns', returnRouter);
+    // app.use('/logs', logRouter);
+    // app.use('/notifications', notificationRouter);
+    // app.use('/ratings', ratingRouter);
+    // app.use('/reports', reportRouter);
+    // app.use('/returns', returnRouter);
 
     // // GET
     // app.get('/', (req, res) => {
