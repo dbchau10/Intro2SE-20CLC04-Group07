@@ -19,8 +19,7 @@ const EditProfile = ({navigation}) => {
     const [email, onChangEmail] = useState('dbchau10@gmail.com')
     const [phone, onChangePhone] = useState('+84919236800')
 
-    const [male,onChangeMale] = useState(false)
-    const [female,onChangeFemale] = useState(true)
+    const [gender,onChangeGender] = useState('female')
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(false);
@@ -87,11 +86,19 @@ const EditProfile = ({navigation}) => {
             />
         </View>
         <View style={styles.action}>
-            <TextInput 
-            placeholder="Gender"
-            placeholderTextColor="#666666"
-            style={styles.textInput}
-            />
+            <View style={styles.wrapper}>
+                {['female','male'].map(select =>
+                <View key={select} style={styles.gender}>
+                    
+                <TouchableOpacity style={styles.outer}
+                onPress={() => onChangeGender(select)}>
+                {gender === select &&  <View style={styles.inner} /> }
+               
+               </TouchableOpacity>
+               <Text style={{textTransform: 'capitalize', paddingLeft: 10, color: '#666666'}}>{select}</Text>
+               </View>
+                    )}
+            </View>
         </View>
         <View style={styles.action}>
         <TouchableOpacity onPress={() => showDate()}>
@@ -149,7 +156,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 50,
-        paddingBottom: 30,
         paddingTop: parameters.statusBarHeight,
     },
     commandButton: {
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
     },
     action: {
         flexDirection: 'row',
-        marginVertical: 5,
+      
         paddingHorizontal: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'lightgrey',
@@ -169,6 +175,33 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        paddingLeft: 10
+        paddingLeft: 10,
+        color: '#666666'
+    },
+    outer: {
+        width: 20,
+        height: 20,
+        borderWidth: 1,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'gray'
+
+    },
+    inner: {
+        width: 10,
+        height: 10,
+        backgroundColor: 'gray',
+        borderRadius: 15
+    },
+    wrapper: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+        
+    },
+    gender: {
+        marginRight:10,
+        alignItems: 'center',
+        flexDirection: 'row'
     }
 })
