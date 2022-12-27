@@ -1,5 +1,5 @@
 -- create database cadgerdb;
-
+-- \c cadgerdb
 create table account(
     username varchar(20),
     password varchar(20),
@@ -27,8 +27,8 @@ create table item(
     img varchar(50),
     description varchar(100),
     rating decimal(2,1),
-    status char(1),
-    borrow_times smallint,
+    status smallint,
+    borrow_times int,
     primary key(item_id)
 );
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const itemsController = require('../controllers/ItemsController');
 
-router.get('/search/:kw', itemsController.search);
+router.get('/search', itemsController.search);
 router.get('/getById/:id', itemsController.getById);
 router.post('/create', itemsController.create);
 router.put('/updateStatus/:id', itemsController.updateStatus);

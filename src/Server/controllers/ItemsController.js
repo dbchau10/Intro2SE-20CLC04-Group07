@@ -5,11 +5,15 @@ class ItemsController {
     // [GET]
     async search(req, res) {
         try {
-            let { kw } = req.params;
-            kw = '%' + kw + '%';
-            const item = await pool.query(
-                "SELECT * FROM item WHERE name LIKE $1",
-                [kw]
+            let data = req.query;
+            data.keyword = '%' + data.keyword + '%';
+            data.ratingFilter = parseInt(data.ratingFilter);
+            let item;
+            let q ="SELECT * FROM item WHERE name LIKE $1 AND rating >= $2";
+            if (data.unavailable == "0") q += " AND status = 0"
+            item = await pool.query(
+                q,
+                [data.keyword, data.ratingFilter]
             );
             res.json(item.rows);
         }
@@ -17,6 +21,7 @@ class ItemsController {
             console.error(err.message);
         }
     }
+    
     // [GET]
     async getById(req, res) {
         try {
