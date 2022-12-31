@@ -4,6 +4,7 @@ specifiers:
   cors: ^2.8.5
   express: ^4.18.2
   joi: ^17.7.0
+  nodemailer: ^6.8.0
   nodemon: ^2.0.20
   pg: ^8.8.0
 
@@ -11,6 +12,7 @@ dependencies:
   cors: 2.8.5
   express: 4.18.2
   joi: 17.7.0
+  nodemailer: 6.8.0
   nodemon: 2.0.20
   pg: 8.8.0
 
@@ -452,6 +454,11 @@ packages:
   /negotiator/0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /nodemailer/6.8.0:
+    resolution: {integrity: sha512-EjYvSmHzekz6VNkNd12aUqAco+bOkRe3Of5jVhltqKhEsjw/y0PYPJfp83+s9Wzh1dspYAkUW/YNQ350NATbSQ==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nodemon/2.0.20:
