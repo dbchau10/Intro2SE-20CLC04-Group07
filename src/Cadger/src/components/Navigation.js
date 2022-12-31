@@ -7,6 +7,7 @@ import Login from '../Screen/Login';
 import SignUp from '../Screen/SignUp';
 import Result from '../Screen/Result';
 import Homepage from '../Screen/Homepage';
+import HomeNavigator from './HomeNavigator';
 import Tabs from './Tabs';
 const Navigation = () => {
   return (

@@ -13,6 +13,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons';
 import ItemDetail from '../Screen/ItemDetail';
 import Navigation from './Navigation';
 import PersonalPage from '../Screen/PersonalPage';
+import HomeNavigator from './HomeNavigator';
 import ProfileNavigator from './ProfileNavigator';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -36,7 +37,7 @@ const Tabs = () => {
     ...styles.shadow },
     }}>
 
-      <Tab.Screen name="Home" component={Homepage}  options={{
+      <Tab.Screen name="Home" component={HomeNavigator}  options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>
             <Icon2 style={{
