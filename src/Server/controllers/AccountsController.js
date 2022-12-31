@@ -10,9 +10,7 @@ class AccountsController {
                 "SELECT username,password FROM account WHERE username=$1 and password=$2",
                 [username,password]
             );
-            if (!account) return res.status(404).send("username:$1 or password:$2 incorrect",
-                [username,password]
-            );
+            if (!account) return res.status(404).send(`username:${username} or password:${password} incorrect`);
             res.send("login successfully")
         }
         catch (err){
