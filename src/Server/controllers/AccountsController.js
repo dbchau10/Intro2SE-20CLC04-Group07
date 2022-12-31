@@ -3,6 +3,23 @@ const pool = require("../models/database");
 
 class AccountsController {
     // [GET]
+    async validate_login(req, res) {
+        try {
+            const {username,password} = req.params;
+            const account = await pool.query(
+                "SELECT username,password FROM account WHERE username=$1 and password=$2",
+                [username,password]
+            );
+            if (!account) return res.status(404).send("username:$1 or password:$2 incorrect",
+                [username,password]
+            );
+            res.send("login successfully")
+        }
+        catch (err){
+            console.error(err.message);
+        }
+    }
+    // [GET]
     async read(req, res) {
         try {
             const {username} = req.params;
