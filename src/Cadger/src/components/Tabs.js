@@ -6,6 +6,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-nati
 const Tab = createBottomTabNavigator();
 import Homepage from '../Screen/Homepage';
 import Result from '../Screen/Result';
+import ResultItem from '../Screen/ResultItem';
 import PostItem from '../Screen/PostItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
@@ -52,7 +53,7 @@ const Tabs = () => {
         tabBarLabel:() => {return null},
         
       }} />
-      <Tab.Screen name="Result" component={Result}
+      <Tab.Screen name="Result" component={ResultItem}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>
