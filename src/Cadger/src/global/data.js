@@ -53,21 +53,24 @@ export const ItemData = [
 export const commentData = [
   {
     id: 1,
-    username: 'trevaxxie',
+    name: 'trevaxxie',
     value: 'Sản phẩm xài chất lượng. Cho 5 sao!',
-    date: '20/12/2022'
+    date: '20/12/2022',
+    imagePath: require('../../assets/pictures/book.jpg')
   },
   {
     id: 2,
-    username: 'mgik2y',
+    name: 'mgik2y',
     value: 'Sẽ mượn lại!',
-    date: '19/10/2022'
+    date: '19/10/2022',
+    imagePath: require('../../assets/pictures/book.jpg')
   },
   {
     id: 3,
-    username: 'trevaxxie',
+    name: 'akarimo123',
     value: 'Chủ sốp đẹp trai. Đánh giá tốt!',
-    date: '3/5/2022'
+    date: '3/5/2022',
+    imagePath: require('../../assets/pictures/book.jpg')
   },
 
-]
+];

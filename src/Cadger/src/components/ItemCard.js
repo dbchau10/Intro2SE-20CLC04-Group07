@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -13,7 +14,8 @@ const green = '#98FB98';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-const ItemCard = ({ item }) => (
+const ItemCard = ({ item, navigation }) => (
+  <TouchableOpacity onPress={()=> navigation.navigate('Item')}>
   <View style={styles.itemBox}>
     <View style={styles.itemContentBox}>
       <Image source={item.imagePath}
@@ -31,6 +33,7 @@ const ItemCard = ({ item }) => (
       </View>
     </View>
   </View>
+  </TouchableOpacity>
 );
 
 export default ItemCard;
