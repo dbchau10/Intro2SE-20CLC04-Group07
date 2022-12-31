@@ -15,6 +15,7 @@ import Navigation from './Navigation';
 import PersonalPage from '../Screen/PersonalPage';
 import HomeNavigator from './HomeNavigator';
 import ProfileNavigator from './ProfileNavigator';
+import Item from '../Screen/Item';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const CustomTabBarButton = ({children, onPress}) => (
@@ -84,7 +85,7 @@ const Tabs = () => {
         ),
         tabBarLabel:() => {return null},
       }} />
-      <Tab.Screen name="Notification" component={ItemDetail}
+      <Tab.Screen name="Notification" component={Item}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>

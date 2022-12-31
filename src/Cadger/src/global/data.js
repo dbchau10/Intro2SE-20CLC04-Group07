@@ -50,3 +50,24 @@ export const ItemData = [
 
   }
 ];
+export const commentData = [
+  {
+    id: 1,
+    username: 'trevaxxie',
+    value: 'Sản phẩm xài chất lượng. Cho 5 sao!',
+    date: '20/12/2022'
+  },
+  {
+    id: 2,
+    username: 'mgik2y',
+    value: 'Sẽ mượn lại!',
+    date: '19/10/2022'
+  },
+  {
+    id: 3,
+    username: 'trevaxxie',
+    value: 'Chủ sốp đẹp trai. Đánh giá tốt!',
+    date: '3/5/2022'
+  },
+
+]
