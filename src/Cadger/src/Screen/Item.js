@@ -8,13 +8,13 @@ const green = '#98FB98';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ItemComment from '../components/ItemComment';
 import ItemCard from '../components/ItemCard';
-const Item = () => {
+const Item = ({navigation}) => {
   return (
    <SafeAreaView style={styles.container}>
     <ScrollView bounces={false}>
     <View style={styles.preview}>
     <Image source={require('../../assets/pictures/laptop.jpg')} 
-    style={{alignSelf: 'center', height: '100%', width: '70%' }}
+    style={{alignSelf: 'center', height: '100%', width: '100%' }}
     />
     </View>
     <View style={styles.header}>
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 50,
-        paddingTop: parameters.statusBarHeight,
         backgroundColor: '#EBEBEB'
       
     },

@@ -27,7 +27,7 @@ import Icon2 from 'react-native-vector-icons/AntDesign';
 import { parameters } from '../global/style';
 import { ItemData } from '../global/data';
 import ItemCard from '../components/ItemCard';
-const ResultItem = () => {
+const ResultItem = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
@@ -66,7 +66,11 @@ const ResultItem = () => {
       <FlatList
             data={ItemData}
             keyExtractor={item => item.id}
-            renderItem={ItemCard}
+            renderItem={({ item }) =>
+            <TouchableOpacity  onPress={() => navigation.navigate("Item")} >
+             <ItemCard item={item} />
+             </TouchableOpacity>
+             }
           />
           </View>
     </SafeAreaView>

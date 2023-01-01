@@ -48,7 +48,7 @@ const Homepage = ({navigation}) => {
           <TextInput
             style={styles.input}
           />
-          <TouchableOpacity style={{padding: 5}} onPress={()=> navigation.navigate('Result')}>
+          <TouchableOpacity style={{padding: 5}} onPress={()=> navigation.navigate('ResultItem')}>
             <Text><Icon name='search' size={14} color='black'/></Text>
       </TouchableOpacity>
       </View>

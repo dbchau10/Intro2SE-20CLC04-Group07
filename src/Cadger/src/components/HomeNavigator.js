@@ -7,6 +7,7 @@ import ResultItem from '../Screen/ResultItem';
 import Item from '../Screen/Item';
 import ItemCard from './ItemCard';
 import ItemNavigator from './ItemNavigator';
+import Result from '../Screen/Result';
 const HomeNavigator = () => {
   return (
       <HomeStack.Navigator>
@@ -16,9 +17,16 @@ const HomeNavigator = () => {
           options={{headerShown: false}}
         />
        <HomeStack.Screen
-          name="Result"
-          component={ItemNavigator}
+          name="ResultItem"
+          component={ResultItem}
           options={{headerShown: false}}
+        /> 
+        <HomeStack.Screen
+          name="Item"
+          component={Item}
+          options={{
+            title: 'Item Detail'
+          }}
         /> 
       </HomeStack.Navigator>
   );

@@ -15,7 +15,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const ItemCard = ({ item, navigation }) => (
-  <TouchableOpacity onPress={()=> navigation.navigate('Item')}>
   <View style={styles.itemBox}>
     <View style={styles.itemContentBox}>
       <Image source={item.imagePath}
@@ -33,7 +32,6 @@ const ItemCard = ({ item, navigation }) => (
       </View>
     </View>
   </View>
-  </TouchableOpacity>
 );
 
 export default ItemCard;
