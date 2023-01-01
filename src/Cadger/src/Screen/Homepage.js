@@ -70,7 +70,11 @@ const Homepage = ({navigation}) => {
           <FlatList
             data={ItemData}
             keyExtractor={item => item.id}
-            renderItem={ItemCard}
+            renderItem={({ item }) =>
+            <TouchableOpacity  onPress={() => navigation.navigate("Item")} >
+             <ItemCard item={item} />
+             </TouchableOpacity>
+             }
           />
         </View>
         </ScrollView>
