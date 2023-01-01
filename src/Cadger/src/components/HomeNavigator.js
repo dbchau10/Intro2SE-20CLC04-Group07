@@ -5,6 +5,8 @@ const HomeStack = createNativeStackNavigator();
 import Homepage from '../Screen/Homepage';
 import ResultItem from '../Screen/ResultItem';
 import Item from '../Screen/Item';
+import ItemCard from './ItemCard';
+import ItemNavigator from './ItemNavigator';
 const HomeNavigator = () => {
   return (
       <HomeStack.Navigator>
@@ -14,13 +16,9 @@ const HomeNavigator = () => {
           options={{headerShown: false}}
         />
        <HomeStack.Screen
-          name="ResultItem"
-          component={ResultItem}
+          name="Result"
+          component={ItemNavigator}
           options={{headerShown: false}}
-        /> 
-        <HomeStack.Screen
-          name="Item"
-          component={Item}
         /> 
       </HomeStack.Navigator>
   );

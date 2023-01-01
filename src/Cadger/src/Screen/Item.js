@@ -1,17 +1,20 @@
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
 import { parameters } from '../global/style'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+import { commentData, ItemData } from '../global/data';
 const green = '#98FB98';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ItemComment from '../components/ItemComment';
+import ItemCard from '../components/ItemCard';
 const Item = () => {
   return (
    <SafeAreaView style={styles.container}>
-    <ScrollView>
+    <ScrollView bounces={false}>
     <View style={styles.preview}>
     <Image source={require('../../assets/pictures/laptop.jpg')} 
-    style={{alignSelf: 'center', height: '100%', width: '100%' }}
+    style={{alignSelf: 'center', height: '100%', width: '70%' }}
     />
     </View>
     <View style={styles.header}>
@@ -40,7 +43,7 @@ const Item = () => {
               />
               <View>
             <Text style={styles.username}>alsophanie</Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={()=>console.log(ItemData)}>
                 <Text style={{fontWeight: 'bold', fontSize: 14}}>Borrow Now</Text>
             </TouchableOpacity>
         </View>
@@ -63,72 +66,24 @@ const Item = () => {
             </Text>
     </View>
     </View>
-    <View style={styles.description}>
-    <Image
-        style={styles.avatarComment}
-        source={require('../../assets/pictures/avatar.jpg')}
-              />
-              <View style={{flexDirection: 'column'}}>
-                <Text>trexaffvx</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flexDirection: 'row',paddingVertical: 10, paddingRight: 10}}>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
+    <FlatList
+            data={commentData}
+            keyExtractor={(comment) => comment.id}
+            renderItem={ItemComment}
+          />
+          <View style={styles.description}>
+            <Text style={styles.viewAll}>Xem tất cả</Text>
+          </View>
+          <View style={styles.profile}>
+                <View style={{alignItems: 'center',width: '100%'}}>
+                    <Text style={{paddingVertical: 10}}>Sản phẩm tương tự</Text>
+                    <FlatList
+                    data={ItemData}
+                    keyExtractor={item => item.id}
+                    renderItem={ItemCard}
+                 />
                 </View>
-                <View>
-                <Text style={{fontStyle: 'italic', fontSize: 12}}>20/12/2022</Text>
-                </View>
-                </View>
-                    <Text>Xài tốt đêí. Cho 5 sao chất lượng !</Text>
-              </View>
-    </View>
-    <View style={styles.description}>
-    <Image
-        style={styles.avatarComment}
-        source={require('../../assets/pictures/avatar.jpg')}
-              />
-              <View style={{flexDirection: 'column'}}>
-                <Text>trexaffvx</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flexDirection: 'row',paddingVertical: 10, paddingRight: 10}}>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
-                </View>
-                <View>
-                <Text style={{fontStyle: 'italic', fontSize: 12}}>20/12/2022</Text>
-                </View>
-                </View>
-                    <Text>Xài tốt đêí. Cho 5 sao chất lượng !</Text>
-              </View>
-    </View>
-    <View style={styles.description}>
-    <Image
-        style={styles.avatarComment}
-        source={require('../../assets/pictures/avatar.jpg')}
-              />
-              <View style={{flexDirection: 'column'}}>
-                <Text>trexaffvx</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flexDirection: 'row',paddingVertical: 10, paddingRight: 10}}>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
-                <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
-                </View>
-                <View>
-                <Text style={{fontStyle: 'italic', fontSize: 12}}>20/12/2022</Text>
-                </View>
-                </View>
-                    <Text>Xài tốt đêí. Cho 5 sao chất lượng !</Text>
-              </View>
-    </View>
+          </View>
     </ScrollView>
    </SafeAreaView>
   )
@@ -145,6 +100,7 @@ const styles = StyleSheet.create({
     },
     preview: {
         height: windowHeight*0.45,
+        backgroundColor: 'white'
     },
     header: {
         padding: 20,
@@ -217,7 +173,10 @@ const styles = StyleSheet.create({
         borderColor: '#EBEBEB',
         flexDirection: 'row',
         backgroundColor: 'white',
-        marginTop: 2
+        marginTop: 2,
+        width: '100%',
+        justifyContent: 'center',
+       
 
     },
     descriptionHeader: {
@@ -229,6 +188,11 @@ const styles = StyleSheet.create({
     itemRating: {
         textAlign: 'right',
         paddingHorizontal: 10,
+      },
+      viewAll: {
+        fontStyle: 'italic',
+        fontSize: 15,
+
       },
       
 })

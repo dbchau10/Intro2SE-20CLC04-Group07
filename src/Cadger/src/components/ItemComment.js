@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet, Image} from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
-const ItemComment = ({comment}) => {
+const ItemComment = ({item}) => {
   return (
     <View style={styles.description}>
     <Image
-    source={require('../../assets/pictures/avatar.jpg')}
+    source={item.imagePath}
         style={styles.avatarComment}
               />
               <View style={{flexDirection: 'column'}}>
-                <Text>{comment.username}</Text>
+                <Text>{item.name}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View style={{flexDirection: 'row',paddingVertical: 10, paddingRight: 10}}>
                 <Icon name='star' size={16} color='#F1CF1C'/>
@@ -19,10 +19,10 @@ const ItemComment = ({comment}) => {
                 <Icon name='star' size={16} color='#F1CF1C'/>
                 </View>
                 <View>
-                <Text style={{fontStyle: 'italic', fontSize: 12}}>{comment.date}</Text>
+                <Text style={{fontStyle: 'italic', fontSize: 12}}>{item.date}</Text>
                 </View>
                 </View>
-                    <Text>{comment.value}</Text>
+                <Text>{item.value}</Text>
               </View>
     </View>
   )
