@@ -8,6 +8,7 @@ import Item from '../Screen/Item';
 import ItemCard from './ItemCard';
 import ItemNavigator from './ItemNavigator';
 import Result from '../Screen/Result';
+import BorrowItem from '../Screen/BorrowItem';
 const HomeNavigator = () => {
   return (
       <HomeStack.Navigator>
@@ -26,6 +27,13 @@ const HomeNavigator = () => {
           component={Item}
           options={{
             title: 'Item Detail'
+          }}
+        /> 
+        <HomeStack.Screen
+          name="BorrowItem"
+          component={BorrowItem}
+          options={{
+            title: 'Borrow Request'
           }}
         /> 
       </HomeStack.Navigator>

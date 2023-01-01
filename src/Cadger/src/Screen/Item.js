@@ -43,7 +43,7 @@ const Item = ({navigation}) => {
               />
               <View>
             <Text style={styles.username}>alsophanie</Text>
-            <TouchableOpacity style={styles.button} onPress={()=>console.log(ItemData)}>
+            <TouchableOpacity style={styles.button} onPress={()=>console.log(ItemData)} onPress={()=>navigation.navigate('BorrowItem')}>
                 <Text style={{fontWeight: 'bold', fontSize: 14}}>Borrow Now</Text>
             </TouchableOpacity>
         </View>

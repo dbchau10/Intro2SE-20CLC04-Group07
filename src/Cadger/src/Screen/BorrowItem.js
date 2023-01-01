@@ -1,39 +1,62 @@
-import React from 'react';
-import type {Node} from 'react';
+/* eslint-disable prettier/prettier */
+import React, {useState} from 'react';
+
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   TextInput,
-  KeyboardAvoidingView,
   Alert,
   TouchableOpacity,
   Dimensions,
-  FlatList,
-  Image,
 } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
-
-const BorrowItem: () => Node = () => {
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {parameters} from '../global/style';
+const BorrowItem = () => {
   const [reason, onChangeReason] = React.useState(null);
-  const [borrowDate, onChangeBorrowDate] = React.useState(null);
-  const [returnDate, onChangeReturnDate] = React.useState(null);
-  const name = 'Laptop';
+  
+  const name = 'Laptop cũ phục vụ mục đích học tập';
+    const [date, onChangeDate] = useState(new Date());
+  
+    const [showBorrow, setShowBorrow] = useState(false);
+    const [showReturn, setShowReturn] = useState(false);
+    const [borrowDate, onChangeBorrowDate] = useState(null);
+    const [returnDate, onChangeReturnDate] = useState(null);
 
+    const onChangeBorrow = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShowBorrow(false);
+        onChangeDate(currentDate);
+        let tempDate = new Date(currentDate);
+        let fDate = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/' + tempDate.getFullYear();
+        onChangeBorrowDate(fDate);
+        
+    }
+
+    const onChangeReturn = (event, selectedDate) => {
+      const currentDate = selectedDate || date;
+      setShowReturn(false);
+      onChangeDate(currentDate);
+      let tempDate = new Date(currentDate);
+      let fDate = tempDate.getDate() + '/' + (tempDate.getMonth()+1) + '/' + tempDate.getFullYear();
+      onChangeReturnDate(fDate);
+      
+  }
+
+    const showDate = (prop) => {
+      if (prop==1)
+        setShowBorrow(true);
+      else
+      setShowReturn(true)
+    }
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-            <Text style={styles.headerLogo}>Cadger</Text>
-            <Text style={styles.headerName}>Borrow item</Text>
-        </View>
         <View style={styles.body}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.title}>Reasons</Text>
@@ -44,20 +67,46 @@ const BorrowItem: () => Node = () => {
             onChangeText={onChangeReason}
             value={reason}
           />
-          <Text style={styles.title}>Borrow date</Text>
+           <Text style={styles.title}>Borrow date</Text>
+          <View style={styles.action}>
+        <TouchableOpacity onPress={() => showDate(1)}>
+        <Icon2 name="calendar-o" size={20} />
+        </TouchableOpacity>
             <TextInput 
-              style={styles.box}
-              onChangeText={onChangeBorrowDate}
-              value={borrowDate}
-              placeholder='e.g. 18/12/2022'
+            value={borrowDate}
+            placeholder="e.g. 18/12/2022"
+            placeholderTextColor="#666666"
+            style={styles.textInput}
             />
+            {showBorrow && (
+                <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={onChangeBorrow}
+                />
+            )}
+        </View>
           <Text style={styles.title}>Return date</Text>
+          <View style={styles.action}>
+        <TouchableOpacity onPress={() => showDate(2)}>
+        <Icon2 name="calendar-o" size={20} />
+        </TouchableOpacity>
             <TextInput 
-              style={styles.box}
-              onChangeText={onChangeReturnDate}
-              value={returnDate}
-              placeholder='e.g. 19/12/2022'
+            value={returnDate}
+            placeholder="e.g. 19/12/2022"
+            placeholderTextColor="#666666"
+            style={styles.textInput}
             />
+            {showReturn && (
+                <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={onChangeReturn}
+                />
+            )}
+        </View>
           <TouchableOpacity
           style={styles.btn}
           onPress={() => Alert.alert("Hello")}
@@ -74,54 +123,32 @@ export default BorrowItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'space-between'
-  },
-  header: {
-    height: 0.1*windowHeight,
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-  },
-  headerLogo: {
-    flex: 1,
-    textAlign: 'left',
-    alignSelf: 'center',
-    paddingLeft: 20,
-    fontSize: 40,
-    color: '#98FB98',
-    fontWeight: 'bold',
-    fontFamily: 'Changa One',
-  },
-  headerName: {
-    flex: 1,
-    textAlign: 'right',
-    alignSelf: 'center',
-    paddingRight: 30,
-    fontSize: 25,
-    color: 'black',
-    fontWeight: 'bold',
-    fontFamily: 'Changa One',
+    backgroundColor: "white",
+    paddingBottom: 30,
+    paddingTop: parameters.statusBarHeight,
+    marginBottom: 50,
+    justifyContent: 'center'
   },
   body: {
-    height: 0.8*windowHeight,
+    height: 0.6*windowHeight,
     alignSelf: 'center',
-    paddingTop: 30,
+    paddingHorizontal: 30
   },
   name: {
     textAlign: 'center',
     color: 'black',
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
     color: 'black',
   },
   box: {
     width: 0.8*windowWidth,
     borderWidth: 1,
-    color: 'black',
+    borderColor: 'lightgrey',
     marginVertical: 10,
   },
   btn: {
@@ -130,8 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#98FB98',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
-    borderWidth: 1,
+    borderRadius: 10,
     alignSelf: 'center',
     marginTop: 50,
   },
@@ -140,31 +166,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 22,
   },
-  navbar: {
-    height: 0.1*windowHeight,
-    width: windowWidth,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1.0,
-    elevation: 2,
+  action: {
     flexDirection: 'row',
-  },
-  eleBox: {
-    width: 0.2*windowWidth,
-    height: '100%',
-    justifyContent: 'center',
-  },
-  eleIcon: {
-    alignSelf: 'center',
-  },
-  eleText: {
-    textAlign: 'center',
-    color: 'black',
-  },
+    marginVertical: 10,
+    width: windowWidth*0.8,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    alignItems: 'center'
+},
+textInput: {
+    flex: 1,
+    paddingLeft: 10,
+    color: '#666666'
+}
 })
