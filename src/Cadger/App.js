@@ -43,13 +43,15 @@ import ItemDetail from './src/Screen/ItemDetail';
 import Navigation from './src/components/Navigation';
 import Homepage from './src/Screen/Homepage';
 import Tabs from './src/components/Tabs';
+import SuspendAccount from './src/Screen/SuspendAccount';
 const App = () => {
   return (
-   <NavigationContainer>
-    <Navigation />
-   </NavigationContainer>
+  //  <NavigationContainer>
+  //   <Navigation />
+  //  </NavigationContainer>
   // <Navigation />
   // <Homepage />
+  <SuspendAccount />
   );
 };
 

@@ -2,7 +2,7 @@ const { json } = require('express');
 const pool = require("../models/database");
 
 class ItemsController {
-    // [GET]
+    // [GET] example url: ...?keyword=...&unavailable=...&ratingFilter=...
     async search(req, res) {
         try {
             let data = req.query;
@@ -10,7 +10,7 @@ class ItemsController {
             data.ratingFilter = parseInt(data.ratingFilter);
             let item;
             let q ="SELECT * FROM item WHERE name LIKE $1 AND rating >= $2";
-            if (data.unavailable == "0") q += " AND status = 0"
+            if (data.unavailable == "0") q += " AND status = 0";
             item = await pool.query(
                 q,
                 [data.keyword, data.ratingFilter]

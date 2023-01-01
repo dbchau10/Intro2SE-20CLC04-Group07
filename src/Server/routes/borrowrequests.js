@@ -5,6 +5,6 @@ const borrowRequestsController = require('../controllers/BorrowRequestsControlle
 router.get('/readByItem/:id', borrowRequestsController.readByItem);
 router.get('/readById/:id', borrowRequestsController.readById);
 router.post('/create', borrowRequestsController.create);
-router.delete('/deleteByItem/:id', borrowRequestsController.deleteByItem);
+router.delete('/deleteByItem/:item_id/:req_id', borrowRequestsController.deleteByItem);
 router.delete('/deleteById/:id', borrowRequestsController.deleteById);
 module.exports = router;
