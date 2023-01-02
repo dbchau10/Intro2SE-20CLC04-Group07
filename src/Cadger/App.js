@@ -46,12 +46,12 @@ import Tabs from './src/components/Tabs';
 import SuspendAccount from './src/Screen/SuspendAccount';
 const App = () => {
   return (
-  //  <NavigationContainer>
-  //   <Navigation />
-  //  </NavigationContainer>
+   <NavigationContainer>
+     <Navigation />
+   </NavigationContainer>
   // <Navigation />
   // <Homepage />
-  <SuspendAccount />
+ // <SuspendAccount />
   );
 };
 
