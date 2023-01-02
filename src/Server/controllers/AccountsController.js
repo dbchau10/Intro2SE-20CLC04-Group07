@@ -45,6 +45,20 @@ class AccountsController {
             console.error(err.message);
         }
     }
+    // [GET]
+    async reportinfo(req, res) {
+        try {
+            const {username} = req.params;
+            const account = await pool.query(
+                "SELECT username, email, phone, avatar FROM account WHERE username=$1",
+                [username]
+            );
+            res.json(account.rows[0]);
+        }
+        catch (err){
+            console.error(err.message);
+        }
+    }
     // [POST]
     async signup(req, res) {
         try {

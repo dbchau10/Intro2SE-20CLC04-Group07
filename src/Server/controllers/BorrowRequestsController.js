@@ -46,10 +46,10 @@ class BorrowRequestsController {
     // [PUT]
     async deleteByItem(req, res) {
         try {
-            const {id} = req.params;
+            const data = req.params;
             const borrowReq = await pool.query(
-                "DELETE FROM borrowrequest WHERE item_id = $1 RETURNING *",
-                [id]
+                "DELETE FROM borrowrequest WHERE item_id = $1 AND request_id != $2 RETURNING *",
+                [data.item_id, data.req_id]
             );
             res.json(borrowReq.rows[0]);
         }
