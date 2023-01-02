@@ -107,3 +107,33 @@ export const borrowRequest =[
 
   }
 ];
+
+export const returnRequest =[
+  {
+    id: 1,
+    username: 'aka2k2',
+    imagePath: require('../../assets/pictures/avatar.jpg'),
+    rating: 3.5,
+    returnDate: '10/01/2023',
+    returnPlace: 'Tòa I Trường ĐH KHTN CS2'
+
+  },
+  {
+    id: 2,
+    username: 'bimbim123',
+    imagePath: require('../../assets/pictures/avatar.jpg'),
+    rating: 4,
+    returnDate: '10/01/2023',
+    returnPlace: 'Tòa E Trường ĐH KHTN CS1' 
+
+  },
+  {
+    id: 3,
+    username: 'aka2k2',
+    imagePath: require('../../assets/pictures/avatar.jpg'),
+    rating: 5,
+    returnDate: '10/01/2023',
+    returnPlace: 'Tòa nhà thể chất'
+
+  }
+];

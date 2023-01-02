@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Request from '../Screen/Request';
 import BorrowRequest from '../Screen/BorrowRequest';
+import ReturnRequest from '../Screen/ReturnRequest';
 const RequestStack = createNativeStackNavigator();
 
 
@@ -16,6 +17,13 @@ const RequestNavigator = () => {
        <RequestStack.Screen
           name="BorrowRequest"
           component={BorrowRequest}
+          options={{
+            title: "Laptop cũ phục vụ..."
+          }}
+        /> 
+        <RequestStack.Screen
+          name="ReturnRequest"
+          component={ReturnRequest}
           options={{
             title: "Laptop cũ phục vụ..."
           }}

@@ -48,7 +48,7 @@ const Request = ({navigation}) => {
         style={styles.wrap}
         >
             {ItemData.map( ({id, imagePath, title}) => 
-            (<TouchableOpacity onPress={()=>navigation.navigate('BorrowRequest')}>
+            (<TouchableOpacity onPress={()=>navigation.navigate('ReturnRequest')}>
             <ImageBackground 
             key={id}
             resizeMode='stretch'
