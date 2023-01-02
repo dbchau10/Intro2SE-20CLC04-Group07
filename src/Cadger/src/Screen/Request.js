@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, SafeAreaView, Dimensions, ScrollView, ImageBackground} from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Dimensions, ScrollView, ImageBackground, TouchableOpacity} from 'react-native'
 import React from 'react'
 import { parameters } from '../global/style'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import { ItemData } from '../global/data';
-const Request = () => {
+import Navigation from '../components/Navigation';
+const Request = ({navigation}) => {
 
     onChange = (nativeEvent) => {
 
@@ -21,7 +22,8 @@ const Request = () => {
         style={styles.wrap}
         >
             {ItemData.map( ({id, imagePath, title}) => 
-            (<ImageBackground 
+            (<TouchableOpacity onPress={()=>navigation.navigate('BorrowRequest')}>
+            <ImageBackground 
                 key={id}
                 resizeMode='stretch'
                 style={styles.wrap}
@@ -30,7 +32,9 @@ const Request = () => {
                     <View style={styles.banner}>
                             <Text style={{color: 'white', fontSize: 18}}>{title}</Text>
                         </View>
-                </ImageBackground>)
+                </ImageBackground>
+                </TouchableOpacity>
+                )
             )}
         </ScrollView>
 
@@ -44,7 +48,8 @@ const Request = () => {
         style={styles.wrap}
         >
             {ItemData.map( ({id, imagePath, title}) => 
-            (<ImageBackground 
+            (<TouchableOpacity onPress={()=>navigation.navigate('BorrowRequest')}>
+            <ImageBackground 
             key={id}
             resizeMode='stretch'
             style={styles.wrap}
@@ -53,7 +58,9 @@ const Request = () => {
                 <View style={styles.banner}>
                         <Text style={{color: 'white', fontSize: 18}}>{title}</Text>
                     </View>
-            </ImageBackground>)
+            </ImageBackground>
+            </TouchableOpacity>
+            )
             )}
         </ScrollView>
 

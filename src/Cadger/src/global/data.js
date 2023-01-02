@@ -74,3 +74,36 @@ export const commentData = [
   },
 
 ];
+
+export const borrowRequest =[
+  {
+    id: 1,
+    username: 'aka2k2',
+    imagePath: require('../../assets/pictures/avatar.jpg'),
+    rating: 3.5,
+    body: 'Mình sắp thi học kì òi mà mình hong có máy để thi',
+    borrowDate: '02/01/2023',
+    returnDate: '12/01/2023'
+
+  },
+  {
+    id: 2,
+    username: 'bimbim123',
+    imagePath: require('../../assets/pictures/avatar.jpg'),
+    rating: 4,
+    body: 'Cho mình mượn gấp với huhu',
+    borrowDate: '01/01/2023',
+    returnDate: '12/01/2023'
+
+  },
+  {
+    id: 3,
+    username: 'aka2k2',
+    imagePath: require('../../assets/pictures/avatar.jpg'),
+    rating: 5,
+    body: 'Mình cần máy để làm code. Cảm ơn bạn!',
+    borrowDate: '10/01/2023',
+    returnDate: '20/01/2023'
+
+  }
+];
