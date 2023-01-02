@@ -8,7 +8,7 @@ class ReportsController {
             const report = await pool.query(
                 "SELECT * FROM report"
             );
-            res.json(report.rows[0]);
+            res.json(report.rows);
         }
         catch (err){
             console.error(err.message);
