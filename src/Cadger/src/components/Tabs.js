@@ -87,6 +87,16 @@ const Tabs = () => {
           <CustomTabBarButton {...props}/>
         ),
         tabBarLabel:() => {return null},
+        headerShown: 'true',
+        title: "Post Item",
+        headerStyle: {
+          backgroundColor: '#98FB98',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center'
       }} />
       <Tab.Screen name="Notification" component={Item}
       options={{

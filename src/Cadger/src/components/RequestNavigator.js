@@ -18,14 +18,16 @@ const RequestNavigator = () => {
           name="BorrowRequest"
           component={BorrowRequest}
           options={{
-            title: "Laptop cũ phục vụ..."
+            title: "Laptop cũ phục vụ...",
+            headerTitleAlign: 'center'
           }}
         /> 
         <RequestStack.Screen
           name="ReturnRequest"
           component={ReturnRequest}
           options={{
-            title: "Laptop cũ phục vụ..."
+            title: "Laptop cũ phục vụ...",
+            headerTitleAlign: 'center'
           }}
         /> 
       </RequestStack.Navigator>

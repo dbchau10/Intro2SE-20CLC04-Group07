@@ -26,14 +26,16 @@ const HomeNavigator = () => {
           name="Item"
           component={Item}
           options={{
-            title: 'Item Detail'
+            title: 'Item Detail',
+            headerTitleAlign: 'center'
           }}
         /> 
         <HomeStack.Screen
           name="BorrowItem"
           component={BorrowItem}
           options={{
-            title: 'Borrow Request'
+            title: 'Borrow Request',
+            headerTitleAlign: 'center'
           }}
         /> 
       </HomeStack.Navigator>

@@ -16,7 +16,8 @@ const ProfileNavigator = () => {
           name="EditProfile"
           component={EditProfile}
           options={{
-            title: 'Edit Profile'
+            title: 'Edit Profile',
+            headerTitleAlign: 'center'
           }}
         /> 
       </ProfileStack.Navigator>
