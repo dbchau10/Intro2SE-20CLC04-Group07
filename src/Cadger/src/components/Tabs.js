@@ -17,6 +17,7 @@ import HomeNavigator from './HomeNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import Item from '../Screen/Item';
 import BorrowItem from '../Screen/BorrowItem';
+import Request from '../Screen/Request';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const CustomTabBarButton = ({children, onPress}) => (
@@ -56,7 +57,7 @@ const Tabs = () => {
         tabBarLabel:() => {return null},
         
       }} />
-      <Tab.Screen name="Result" component={BorrowItem}
+      <Tab.Screen name="Request" component={Request}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>
