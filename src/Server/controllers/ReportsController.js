@@ -6,7 +6,7 @@ class ReportsController {
     async read(req, res) {
         try {
             const report = await pool.query(
-                "SELECT * FROM report"
+                "SELECT r.report_id, r.reason, r.sender, r.reported, a.avatar FROM report as r INNER JOIN account as a on r.reported = a.username"
             );
             res.json(report.rows);
         }

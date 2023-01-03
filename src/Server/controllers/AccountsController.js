@@ -1,22 +1,10 @@
 const { json } = require('express');
 const pool = require("../models/database");
-
+const CryptoJS = require('crypto-js');
+const encrypt = (password) => {
+    return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(password));
+  }
 class AccountsController {
-    // [GET]
-    async validate_login(req, res) {
-        try {
-            const {username,password} = req.params;
-            const account = await pool.query(
-                "SELECT username,password FROM account WHERE username=$1 and password=$2",
-                [username,password]
-            );
-            if (!account) return res.status(404).send(`username:${username} or password:${password} incorrect`);
-            res.send("login successfully")
-        }
-        catch (err){
-            console.error(err.message);
-        }
-    }
     // [GET]
     async read(req, res) {
         try {
@@ -63,12 +51,24 @@ class AccountsController {
     async signup(req, res) {
         try {
             const {username} = req.params;
-            const data = req.body;
-            const account = await pool.query(
-                "INSERT INTO account(username, password, email, phone) VALUES($1, $2, $3, $4) RETURNING *",
-                [username, data.password, data.email, data.phone]
+            let {password, email, phone} = req.body;
+            console.log(password, email, phone);
+            password = encrypt(password);
+            console.log(password);
+            const check = await pool.query(
+                "SELECT username FROM account WHERE username=$1",
+                [username]
             );
-            res.json(account.rows[0]);
+            if (check.rows[0] == null) {
+                const account = await pool.query(
+                    "INSERT INTO account(username, password, email, phone) VALUES($1, $2, $3, $4) RETURNING *",
+                    [username, password, email, phone]
+                );
+                res.json(account.rows[0]);
+            } else {
+                res.send("Error");
+            }
+            
         }
         catch (err){
             console.error(err.message);

@@ -14,16 +14,6 @@ import Tabs from './Tabs';
 const Navigation = () => {
   return (
       <Stack.Navigator>
-      <Stack.Screen
-          name="Admin"
-          component={Admin}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="SuspendAccount"
-          component={SuspendAccount}
-          options={{headerShown: false}}
-        />
         <Stack.Screen
           name="Login"
           component={Login}
@@ -37,6 +27,16 @@ const Navigation = () => {
         <Stack.Screen
           name="Tabs"
           component={Tabs}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Admin"
+          component={Admin}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SuspendAccount"
+          component={SuspendAccount}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

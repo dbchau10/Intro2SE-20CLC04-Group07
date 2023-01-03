@@ -22,15 +22,24 @@ const green = '#98FB98';
 import { ip, port } from '../global/data';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
-
+let load = true;
 const Admin = ({navigation}) => {
+  const [report, setReport] = React.useState("");
+  React.useEffect(() => {
+      const focusHandler = navigation.addListener('focus', () => {
+          load = true;
+          loadReport();
+      });
+      return focusHandler;
+  }, [navigation]);
   const Item = ({ item }) => (
     <TouchableOpacity style={styles.itemBox} onPress={() => {
       console.log("Switch to suspend account");
       navigation.navigate('SuspendAccount', {report_id: item.report_id})
     }}>
       <View style={styles.itemContentBox}>
-        <Image source = {{uri:'https://media.discordapp.net/attachments/910154517046255656/1055499894166667304/image.png'}}
+        <Image source = {`${item.avatar}`}
+        /* <Image source = {{uri:`${item.avatar}`}} */
         style = {styles.itemImg}
         />  
         <Text style={styles.itemReported}>{item.reported}</Text>
@@ -41,7 +50,6 @@ const Admin = ({navigation}) => {
       </View>
     </TouchableOpacity>
   );
-  const [report, setReport] = React.useState("");
   const loadReport = async () => {
     try {
       const r = await fetch(`http://${ip}:${port}/reports`, {
@@ -49,11 +57,12 @@ const Admin = ({navigation}) => {
       });
       const d = await r.json();
       setReport(d);
+      load = false;
     } catch (err) {
       console.log(err.message);
     }
   }
-  if (report == "") {
+  if (load) {
     loadReport();
   }
   const renderItem = ({ item }) => (
@@ -62,7 +71,6 @@ const Admin = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.headerLogo}>Cadger</Text>
             <Text style={styles.headerName}>Admin</Text>
         </View>
         <View style={styles.body}>
@@ -74,7 +82,7 @@ const Admin = ({navigation}) => {
           />
         </View>
         <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btnBox} onPress={() => console.log("logout")}>
+          <TouchableOpacity style={styles.btnBox} onPress={() => navigation.navigate("Login")}>
               <Text style={styles.btnText}>Log out</Text>
           </TouchableOpacity>
         </View>
@@ -95,21 +103,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
   },
-  headerLogo: {
-    flex: 1,
-    textAlign: 'left',
-    alignSelf: 'center',
-    paddingLeft: 20,
-    fontSize: 40,
-    color: '#98FB98',
-    fontWeight: 'bold',
-    fontFamily: 'Changa One',
-  },
   headerName: {
     flex: 1,
-    textAlign: 'right',
+    textAlign: 'center',
     alignSelf: 'center',
-    paddingRight: 30,
     fontSize: 25,
     color: 'black',
     fontWeight: 'bold',

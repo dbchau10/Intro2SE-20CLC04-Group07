@@ -70,7 +70,6 @@ const SuspendAccount = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.headerLogo}>Cadger</Text>
             <Text style={styles.headerName}>Suspend Account</Text>
         </View>
         <TouchableOpacity style={styles.backContainer} onPress={() => navigation.navigate("Admin")}>
@@ -79,7 +78,7 @@ const SuspendAccount = ({route, navigation}) => {
           </TouchableOpacity>
         <View style={styles.reporterContainer}>
           <View style={styles.reporterInfo}>
-            <Image source = {{uri:'https://media.discordapp.net/attachments/910154517046255656/1055499894166667304/image.png'}}
+            <Image source = {{uri:`${reporter.avatar}`}}
             style = {styles.reporterImg}
             />  
             <View style={styles.reporterContent}>
@@ -95,7 +94,7 @@ const SuspendAccount = ({route, navigation}) => {
           <Text style={styles.reportedTitle}>Reported Account:</Text>
           <View style={styles.reportedBox}>
             <View style={styles.reportedInfo}>
-              <Image source = {{uri:'https://media.discordapp.net/attachments/910154517046255656/1055499894166667304/image.png'}}
+              <Image source = {{uri:`${reporter.avatar}`}}
               style = {styles.reportedImg}
               />  
               <View style={styles.reportedContent}>
@@ -113,10 +112,32 @@ const SuspendAccount = ({route, navigation}) => {
             </View>
           </View>
           <View style={styles.btnContainer}>
-            <TouchableOpacity style={styles.btnBox} onPress={() => console.log("logout")}>
+            <TouchableOpacity style={styles.btnBox} onPress={async() => {
+              Promise.all([
+                fetch(`http://${ip}:${port}/reports/delete/${report_id}`, {
+                method: 'DELETE',
+                }),
+                fetch(`http://${ip}:${port}/accounts/delete/${reported.username}`, {
+                method: 'DELETE',
+                })
+              ]).then(allResponses => {
+                console.log(`Suspended account ${reported.username}`);
+              })
+              navigation.navigate("Admin");
+            }}>
                 <Text style={styles.btnText}>Suspend this account</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn2} onPress={() => console.log("delete")}>
+            <TouchableOpacity style={styles.btn2} onPress={async() => {
+              try {
+                const r = await fetch(`http://${ip}:${port}/reports/delete/${report_id}`, {
+                method: 'DELETE',
+                });
+              } catch (err) {
+                console.log(err.message);
+              }
+              console.log(`Deleted report ${report_id}`);
+              navigation.navigate("Admin");
+            }}>
                 <Text style={styles.btn2Text}>Delete this report</Text>
             </TouchableOpacity>
           </View>
@@ -138,21 +159,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
   },
-  headerLogo: {
-    flex: 1,
-    textAlign: 'left',
-    alignSelf: 'center',
-    paddingLeft: 20,
-    fontSize: 40,
-    color: '#98FB98',
-    fontWeight: 'bold',
-    fontFamily: 'Changa One',
-  },
   headerName: {
     flex: 1,
-    textAlign: 'right',
+    textAlign: 'center',
     alignSelf: 'center',
-    paddingRight: 30,
     fontSize: 25,
     color: 'black',
     fontWeight: 'bold',

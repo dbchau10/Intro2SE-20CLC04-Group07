@@ -2,7 +2,7 @@
 -- \c cadgerdb
 create table account(
     username varchar(20),
-    password varchar(20),
+    password varchar(100),
     name varchar(50),
     dob date,
     email varchar(30),

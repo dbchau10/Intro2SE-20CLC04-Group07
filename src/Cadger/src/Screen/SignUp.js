@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import { ip, port } from '../global/data';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -44,6 +46,7 @@ const SignUp = ({navigation}) => {
             style={styles.input}
             onChangeText={onChangePassword}
             value={password}
+            secureTextEntry
           />
           <View>
             <Text style={styles.inputText}>Email</Text>
@@ -66,11 +69,37 @@ const SignUp = ({navigation}) => {
       <View style={styles.signUpContainerButton}>
         <TouchableOpacity
           style={styles.btn1}
-          onPress={() => {
-            // Process sign up
-            Alert.alert("Hello");
-            navigation.navigate('Login');
-            }}
+          onPress={async() => {
+            if (username === '') {
+              Alert.alert('Username required!');
+            } else if (password === '') {
+              Alert.alert('Password required!');
+            } else if (email === '' && phone === '') {
+              Alert.alert("Email or phone required!");
+            } else {
+              try {
+                const body = {password, email, phone};
+                const r = await fetch(`http://${ip}:${port}/accounts/signup/${username}`, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+                });
+                try {
+                  let d = await r.json();
+                  Alert.alert('Signed up successfully!');
+                  navigation.navigate('Login');
+                } catch (err) {
+                  Alert.alert('Username is existed!');
+                }
+              } catch (err) {
+                console.log(err.message);
+              }
+              
+            }
+          }}
         >
           <Text style={styles.btnText1}>Sign Up</Text>
         </TouchableOpacity>

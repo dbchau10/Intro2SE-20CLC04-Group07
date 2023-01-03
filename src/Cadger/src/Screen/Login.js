@@ -10,8 +10,14 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+const CryptoJS = require('crypto-js');
+import { ip, port } from '../global/data';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
+const encrypt = (password) => {
+  return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(password));
+}
 
 const Login = ({navigation}) => {
   const [username, onChangeUsername] = React.useState(null);
@@ -49,7 +55,22 @@ const Login = ({navigation}) => {
       <View style={styles.loginContainerButton}>
         <TouchableOpacity
           style={styles.btn1}
-          onPress={() => navigation.navigate('Tabs')}>
+          onPress={async() => {
+            let data;
+            try {
+              const r = await fetch(`http://${ip}:${port}/accounts/${username}`, {
+              method: 'GET',
+              });
+              data = await r.json();
+            } catch (err) {
+              console.log(err.message);
+            }
+            console.log(data.password);
+            if (data.password === encrypt(password))
+              navigation.navigate('Tabs');
+            else
+              Alert.alert("Login failed!");
+          }}>
           <Text style={styles.btnText1}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
