@@ -11,7 +11,6 @@ import PostItem from '../Screen/PostItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import ItemDetail from '../Screen/ItemDetail';
-import Navigation from './Navigation';
 import PersonalPage from '../Screen/PersonalPage';
 import HomeNavigator from './HomeNavigator';
 import ProfileNavigator from './ProfileNavigator';

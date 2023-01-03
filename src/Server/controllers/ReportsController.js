@@ -14,6 +14,20 @@ class ReportsController {
             console.error(err.message);
         }
     }
+    // [GET]
+    async readById(req, res) {
+        try {
+            const {id} = req.params;
+            const report = await pool.query(
+                "SELECT * FROM report WHERE report_id = $1",
+                [id]
+            );
+            res.json(report.rows[0]);
+        }
+        catch (err){
+            console.error(err.message);
+        }
+    }
     // [POST]
     async create(req, res) {
         try {

@@ -19,64 +19,43 @@ import {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const green = '#98FB98';
+import { ip, port } from '../global/data';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
-const Item = ({ item }) => (
-  <View style={styles.itemBox}>
-    <View style={styles.itemContentBox}>
-      <Image source = {{uri:'https://media.discordapp.net/attachments/910154517046255656/1055499894166667304/image.png'}}
-      style = {styles.itemImg}
-      />  
-      <Text style={styles.itemReported}>{item.reported}</Text>
-    </View>
-    <View style={styles.itemContentBox}>
-      <Text style={styles.itemTitle}>Report by:</Text>
-      <Text style={styles.itemSender}>{item.sender}</Text>
-    </View>
-  </View>
-);
-
-const DATA = [
-  {
-    id: 1,
-    sender: 'Cr7',
-    reported: 'Messi',
-    reason: 'hoi pen',
-  },
-  {
-    id: 2,
-    sender: 'Cr7',
-    reported: 'Messi',
-    reason: 'hoi pen',
-  },
-  {
-    id: 3,
-    sender: 'Cr7',
-    reported: 'Messi',
-    reason: 'hoi pen',
-  },
-  {
-    id: 4,
-    sender: 'Cr7',
-    reported: 'Messi',
-    reason: 'hoi pen',
-  },
-  {
-    id: 5,
-    sender: 'Cr7',
-    reported: 'Messi',
-    reason: 'hoi pen',
-  },
-  {
-    id: 6,
-    sender: 'Cr7',
-    reported: 'Messi',
-    reason: 'hoi pen',
-  },
-];
-
-const Admin: () => Node = () => {
+const Admin = ({navigation}) => {
+  const Item = ({ item }) => (
+    <TouchableOpacity style={styles.itemBox} onPress={() => {
+      console.log("Switch to suspend account");
+      navigation.navigate('SuspendAccount', {report_id: item.report_id})
+    }}>
+      <View style={styles.itemContentBox}>
+        <Image source = {{uri:'https://media.discordapp.net/attachments/910154517046255656/1055499894166667304/image.png'}}
+        style = {styles.itemImg}
+        />  
+        <Text style={styles.itemReported}>{item.reported}</Text>
+      </View>
+      <View style={styles.itemContentBox}>
+        <Text style={styles.itemTitle}>Report by:</Text>
+        <Text style={styles.itemSender}>{item.sender}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+  const [report, setReport] = React.useState("");
+  const loadReport = async () => {
+    try {
+      const r = await fetch(`http://${ip}:${port}/reports`, {
+      method: 'GET',
+      });
+      const d = await r.json();
+      setReport(d);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  if (report == "") {
+    loadReport();
+  }
   const renderItem = ({ item }) => (
     <Item item={item} />
   );
@@ -89,9 +68,9 @@ const Admin: () => Node = () => {
         <View style={styles.body}>
           <Text style={styles.title}>List of reported accounts</Text>
           <FlatList
-          data={DATA}
+          data={report}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.report_id}
           />
         </View>
         <View style={styles.btnContainer}>

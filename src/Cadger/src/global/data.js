@@ -137,3 +137,6 @@ export const returnRequest =[
 
   }
 ];
+
+export const ip = "192.168.1.14";
+export const port = "3000";

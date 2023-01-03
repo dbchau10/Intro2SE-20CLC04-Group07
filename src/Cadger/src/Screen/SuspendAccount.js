@@ -19,35 +19,61 @@ import {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const green = '#98FB98';
+import { ip, port } from '../global/data';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
-const report = {
-  sender: 'cr7',
-  reported: 'messi',
-  reason: 'hoi cup',
-};
-
-const reporter = {
-  username: 'cr7',
-  email: 'messi@gmail.com',
-  phone: '0113115117',
-}
-
-const reported = {
-  username: 'messi',
-  email: 'cr7@gmail.com',
-  phone: '0113114115',
-}
-
-const SuspendAccount: () => Node = () => {
+const SuspendAccount = ({route, navigation}) => {
+  const {report_id} = route.params;
+  const [report, setReport] = React.useState("");
+  const [reporter, setReporter] = React.useState("");
+  const [reported, setReported] = React.useState("");
+  const loadReport = async () => {
+    try {
+      const r = await fetch(`http://${ip}:${port}/reports/${report_id}`, {
+      method: 'GET',
+      });
+      const d = await r.json();
+      setReport(d);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  const loadReporter = async () => {
+    try {
+      const r = await fetch(`http://${ip}:${port}/accounts/reportinfo/${report.sender}`, {
+      method: 'GET',
+      });
+      const d = await r.json();
+      setReporter(d);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  const loadReported = async () => {
+    try {
+      const r = await fetch(`http://${ip}:${port}/accounts/reportinfo/${report.reported}`, {
+      method: 'GET',
+      });
+      const d = await r.json();
+      setReported(d);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  if (report == "")
+    loadReport();
+  if (reporter == "")
+    loadReporter();
+  if (reported == "")
+    loadReported();
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.headerLogo}>Cadger</Text>
             <Text style={styles.headerName}>Suspend Account</Text>
         </View>
-        <TouchableOpacity style={styles.backContainer} onPress={() => console.log("back")}>
+        <TouchableOpacity style={styles.backContainer} onPress={() => navigation.navigate("Admin")}>
             <Icon style={styles.backIcon} name='arrow-back' size={35} color='black'/>
             <Text style={styles.backText}>Go back</Text>
           </TouchableOpacity>
