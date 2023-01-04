@@ -24,7 +24,8 @@ import Navbar from '../components/Navbar';
 import {parameters} from '../global/style';
 import { ItemData } from '../global/data';
 import ItemCard from '../components/ItemCard';
-const Homepage = ({navigation}) => {
+const Homepage = ({route, navigation}) => {
+  // console.log(route.params.username);
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
       }, [])

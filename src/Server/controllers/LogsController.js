@@ -7,10 +7,38 @@ class LogsController {
         try {
             const {username} = req.params;
             const log = await pool.query(
-                "SELECT l.log_id, l.item_id, l.borrower, to_char(date, 'dd/mm/yyyy') as date, i.lender FROM log AS l INNER JOIN item as i on i.item_id = l.item_id where i.lender = $1 or l.borrower = $1",
+                "SELECT l.log_id, l.item_id, l.borrower, to_char(date, 'dd/mm/yyyy') as date, i.lender, i.img, i.name FROM log AS l INNER JOIN item as i on i.item_id = l.item_id where i.lender = $1 or l.borrower = $1",
                 [username]
             );
-            res.json(log.rows[0]);
+            res.json(log.rows);
+        }
+        catch (err){
+            console.error(err.message);
+        }
+    }
+    // [GET]
+    async getByBorrower(req, res) {
+        try {
+            const {username} = req.params;
+            const log = await pool.query(
+                "SELECT l.log_id, l.item_id, l.borrower, to_char(date, 'dd/mm/yyyy') as date, i.lender, i.img, i.name FROM log AS l INNER JOIN item as i on i.item_id = l.item_id where l.borrower = $1",
+                [username]
+            );
+            res.json(log.rows);
+        }
+        catch (err){
+            console.error(err.message);
+        }
+    }
+    // [GET]
+    async getByLender(req, res) {
+        try {
+            const {username} = req.params;
+            const log = await pool.query(
+                "SELECT l.log_id, l.item_id, l.borrower, to_char(date, 'dd/mm/yyyy') as date, i.lender, i.img, i.name FROM log AS l INNER JOIN item as i on i.item_id = l.item_id where i.lender = $1",
+                [username]
+            );
+            res.json(log.rows);
         }
         catch (err){
             console.error(err.message);

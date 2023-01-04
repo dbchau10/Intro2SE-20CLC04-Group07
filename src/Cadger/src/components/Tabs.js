@@ -25,9 +25,11 @@ const CustomTabBarButton = ({children, onPress}) => (
       {children}
     </TouchableOpacity>
 )
-const Tabs = () => { 
+const Tabs = ({route}) => {
+  const {username} = route.params;
   return (
     <Tab.Navigator
+    initialRouteName='PersonalPage'
     screenOptions={{
       headerShown: false,
       tabBarStyle: { 
@@ -131,8 +133,9 @@ const Tabs = () => {
           </View>
         ),
         tabBarLabel:() => {return null},
-        
-      }}/>
+      }}
+      params={{username: username}}
+      />
 
 
     </Tab.Navigator>

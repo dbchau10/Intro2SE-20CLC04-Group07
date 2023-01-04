@@ -22,6 +22,13 @@ const encrypt = (password) => {
 const Login = ({navigation}) => {
   const [username, onChangeUsername] = React.useState(null);
   const [password, onChangePassword] = React.useState(null);
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+        onChangeUsername("");
+        onChangePassword("");
+    });
+    return focusHandler;
+  }, [navigation]);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -56,20 +63,23 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.btn1}
           onPress={async() => {
-            let data;
-            try {
-              const r = await fetch(`http://${ip}:${port}/accounts/${username}`, {
-              method: 'GET',
-              });
-              data = await r.json();
-            } catch (err) {
-              console.log(err.message);
+            if (username === null || password === null) {
+              Alert.alert("Username and password required!");
+            } else {
+              let data;
+              try {
+                const r = await fetch(`http://${ip}:${port}/accounts/${username}`, {
+                method: 'GET',
+                });
+                data = await r.json();
+              } catch (err) {
+                console.log(err.message);
+              }
+              if (data.password === encrypt(password))
+                navigation.navigate('Tabs', {username: username});
+              else
+                Alert.alert("Login failed!");
             }
-            console.log(data.password);
-            if (data.password === encrypt(password))
-              navigation.navigate('Tabs');
-            else
-              Alert.alert("Login failed!");
           }}>
           <Text style={styles.btnText1}>Login</Text>
         </TouchableOpacity>

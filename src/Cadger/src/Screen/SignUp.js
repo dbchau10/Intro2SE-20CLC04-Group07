@@ -20,6 +20,15 @@ const SignUp = ({navigation}) => {
   const [password, onChangePassword] = React.useState(null);
   const [email, onChangeEmail] = React.useState(null);
   const [phone, onChangePhone] = React.useState(null);
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+        onChangeUsername("");
+        onChangePassword("");
+        onChangeEmail("");
+        onChangePhone("");
+    });
+    return focusHandler;
+  }, [navigation]);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -70,11 +79,11 @@ const SignUp = ({navigation}) => {
         <TouchableOpacity
           style={styles.btn1}
           onPress={async() => {
-            if (username === '') {
+            if (username === null) {
               Alert.alert('Username required!');
-            } else if (password === '') {
+            } else if (password === null) {
               Alert.alert('Password required!');
-            } else if (email === '' && phone === '') {
+            } else if (email === null && phone === null) {
               Alert.alert("Email or phone required!");
             } else {
               try {
@@ -105,7 +114,7 @@ const SignUp = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btn2}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={() => navigation.goBack()}>
           <Text style={styles.btnText2}>Login</Text>
         </TouchableOpacity>
       </View>

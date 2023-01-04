@@ -21,9 +21,97 @@ import {
   import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
   import Navbar from '../components/Navbar';
   import {parameters} from '../global/style';
-  import { ItemData } from '../global/data';
+  import { ip, port } from '../global/data';
 import ItemPreviewCard from '../components/ItemPreviewCard';
-const PersonalPage = ({navigation}) => {
+
+const BorrowingLogPreviewCard = ({ item }) => (
+  <View style={styles.logItemBox}>
+    <View style={styles.logTitle}>
+        <Text>#{item.log_id}</Text>
+        <View style={{flexDirection: 'row',alignItems: 'center'}}>
+            <Text style={{paddingHorizontal: 5}}>{item.lender}</Text>
+            <TouchableOpacity>
+            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+            </TouchableOpacity>
+        </View>
+    </View>
+    <View style={styles.logItem}>
+        <Image source={require('../../assets/pictures/laptop.jpg')}
+            style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
+          />
+          <View style={styles.logItemDescription}>
+            <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
+            <Text>{item.date}</Text>
+        </View>
+    </View>
+  </View>
+);
+
+const LendingLogPreviewCard = ({ item }) => (
+  <View style={styles.logItemBox}>
+    <View style={styles.logTitle}>
+        <Text>#{item.log_id}</Text>
+        <View style={{flexDirection: 'row',alignItems: 'center'}}>
+            <Text style={{paddingHorizontal: 5}}>{item.borrower}</Text>
+            <TouchableOpacity>
+            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+            </TouchableOpacity>
+        </View>
+    </View>
+    <View style={styles.logItem}>
+        <Image source={require('../../assets/pictures/laptop.jpg')}
+            style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
+          />
+          <View style={styles.logItemDescription}>
+            <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
+            <Text>{item.date}</Text>
+        </View>
+    </View>
+  </View>
+);
+
+const PersonalPage = ({route, navigation}) => {
+  // const {username} = route.params;
+  const username = 'ronaldo';
+  const [info, setInfo] = React.useState("");
+  const [lendingList, setLendingList] = React.useState("");
+  const [borrowingLogs, setBorrowingLogs] = React.useState("");
+  const [lendingLogs, setLendingLogs] = React.useState("");
+  const loadData = async () => {
+    try {
+      Promise.all([
+        fetch(`http://${ip}:${port}/accounts/info/${username}`, {
+        method: 'GET',
+        }),
+        fetch(`http://${ip}:${port}/items/getByLender/${username}`, {
+        method: 'GET',
+        }),
+        fetch(`http://${ip}:${port}/logs/getByBorrower/${username}`, {
+        method: 'GET',
+        }),
+        fetch(`http://${ip}:${port}/logs/getByLender/${username}`, {
+        method: 'GET',
+        })
+      ]).then(async allResponses => {
+        const r1 = allResponses[0];
+        const r2 = allResponses[1];
+        const r3 = allResponses[2];
+        const r4 = allResponses[3];
+        const d1 = await r1.json();
+        const d2 = await r2.json();
+        const d3 = await r3.json();
+        const d4 = await r4.json();
+        setInfo(d1);
+        setLendingList(d2);
+        setBorrowingLogs(d3);
+        setLendingLogs(d4);
+      })
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  if (info == "")
+    loadData();
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView 
@@ -35,8 +123,8 @@ const PersonalPage = ({navigation}) => {
             source={require('../../assets/pictures/avatar.jpg')}
           />
           <View style={styles.welcomeText}>
-          <Text style={styles.text1}>alsophanie</Text>
-          <Text style={styles.text2}>Since 2022</Text>
+          <Text style={styles.text1}>{username}</Text>
+          {/* <Text style={styles.text2}>Since 2022</Text> */}
           </View>
       </View>
       </View>
@@ -51,31 +139,31 @@ const PersonalPage = ({navigation}) => {
         <View style={styles.fieldFirst}>
             <View style={{flexDirection:'row'}}>
             <Text>Name / </Text>
-            <Text>Chau Dang</Text>
+            <Text>{info.name}</Text>
             </View>
         </View>
         <View style={styles.field}>
             <View style={{flexDirection:'row'}}>
             <Text>Gender / </Text>
-            <Text>Female</Text>
+            <Text>{info.gender?(info.gender=="M"?"Male":"Female"):null}</Text>
             </View>
         </View>
         <View style={styles.field}>
             <View style={{flexDirection:'row'}}>
             <Text>DOB / </Text>
-            <Text>14/10/2002</Text>
+            <Text>{info.dob}</Text>
             </View>
         </View>
         <View style={styles.field}>
             <View style={{flexDirection:'row'}}>
             <Text>Email / </Text>
-            <Text>dbchau10@gmail.com</Text>
+            <Text>{info.email}</Text>
             </View>
         </View>
         <View style={styles.fieldLast}>
         <View style={{flexDirection:'row'}}>
             <Text>Tel / </Text>
-            <Text>+84919236800</Text>
+            <Text>{info.phone}</Text>
             </View>
         </View>
       </View>
@@ -90,12 +178,12 @@ const PersonalPage = ({navigation}) => {
         <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={ItemData}
+            data={lendingList}
             keyExtractor={item => item.id}
             renderItem={ItemPreviewCard}
           />
            <TouchableOpacity
-          style={styles.btn}>
+          style={styles.btn} onpress={() => console.log(username)}>
           <Text style={styles.btnText}>CREATE A NEW POST</Text>
         </TouchableOpacity>
         </View>
@@ -109,54 +197,26 @@ const PersonalPage = ({navigation}) => {
             <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
             </TouchableOpacity>
         </View>
-        <View style={styles.logItemBox}>
-            <View style={styles.logTitle}>
-                <Text>No.71</Text>
-                <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                    <Text style={{paddingHorizontal: 5}}>alexxia</Text>
-                    <TouchableOpacity>
-                    <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.logItem}>
-                <Image source={require('../../assets/pictures/laptop.jpg')}
-                    style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
-                 />
-                 <View style={styles.logItemDescription}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>Laptop cũ phục vụ học tập</Text>
-                    <Text>25/12/2022</Text>
-                </View>
-            </View>
-        </View>
-
+        <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={borrowingLogs}
+            keyExtractor={item => item.id}
+            renderItem={BorrowingLogPreviewCard}
+          />
         <View style={styles.logHeading}>
             <Text>Lending Logs</Text>
             <TouchableOpacity>
             <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
             </TouchableOpacity>
         </View>
-        <View style={styles.logItemBox}>
-            <View style={styles.logTitle}>
-                <Text>No.25</Text>
-                <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                    <Text style={{paddingHorizontal: 5}}>alexxia</Text>
-                    <TouchableOpacity>
-                    <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.logItem}>
-                <Image source={require('../../assets/pictures/camera.jpg')}
-                    style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
-                 />
-                 <View style={styles.logItemDescription}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>Camera chụp cực nét</Text>
-                    <Text>25/12/2022</Text>
-                </View>
-            </View>
-        </View>
-
+        <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={lendingLogs}
+            keyExtractor={item => item.id}
+            renderItem={LendingLogPreviewCard}
+          />
         </View>
         </View>
         <View style={{padding: 20}}>

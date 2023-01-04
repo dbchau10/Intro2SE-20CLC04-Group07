@@ -43,7 +43,21 @@ class ItemsController {
                 "SELECT TOP 5 * FROM item ORDER BY borrowed desc",
                 [id]
             );
-            res.json(item.rows[0]);
+            res.json(item.rows);
+        }
+        catch (err){
+            console.error(err.message);
+        }
+    }
+    // [GET]
+    async getByLender(req, res) {
+        try {
+            const {username} = req.params;
+            const item = await pool.query(
+                "SELECT * FROM item WHERE lender = $1",
+                [username]
+            );
+            res.json(item.rows);
         }
         catch (err){
             console.error(err.message);

@@ -24,7 +24,7 @@ class AccountsController {
         try {
             const {username} = req.params;
             const account = await pool.query(
-                "SELECT name, to_char(dob, 'dd/mm/yyyy') as dob, gender, avatar FROM account WHERE username=$1",
+                "SELECT name, to_char(dob, 'dd/mm/yyyy') as dob, gender, email, phone, avatar FROM account WHERE username=$1",
                 [username]
             );
             res.json(account.rows[0]);
@@ -52,9 +52,7 @@ class AccountsController {
         try {
             const {username} = req.params;
             let {password, email, phone} = req.body;
-            console.log(password, email, phone);
             password = encrypt(password);
-            console.log(password);
             const check = await pool.query(
                 "SELECT username FROM account WHERE username=$1",
                 [username]
