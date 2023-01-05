@@ -1,5 +1,4 @@
-import React from 'react';
-import type {Node} from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -22,7 +21,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const green = '#98FB98';
-
+import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
@@ -31,19 +30,43 @@ const PostItem = () => {
   const [name, onChangeName] = React.useState(null);
   const [desc, onChangeDesc] = React.useState(null);
   const [img, onChangeImg] = React.useState(null);
-
+  const [image, setImage] = useState(null);
   const bs = React.createRef();
     const fall = new Animated.Value(1);
-
+    const takePhotoFromCamera = () => {
+      ImagePicker.openCamera({
+        compressImageMaxWidth: 300,
+        compressImageMaxHeight: 300,
+        cropping: true,
+        compressImageQuality: 0.7
+      }).then(image => {
+        console.log(image);
+        setImage(image.path);
+        this.bs.current.snapTo(1);
+      });
+    }
+  
+    const choosePhotoFromLibrary = () => {
+      ImagePicker.openPicker({
+        width: 300,
+        height: 300,
+        cropping: true,
+        compressImageQuality: 0.7
+      }).then(image => {
+        console.log(image);
+        setImage(image.path);
+        this.bs.current.snapTo(1);
+      });
+    }
     const renderInner = () => (
         <View style={styles.panel}>
       <View style={{alignItems: 'center'}}>
         <Text style={styles.panelTitle}>Upload Photo</Text>
         <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
-        <TouchableOpacity style={styles.panelButton}>
+        <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
         <Text style={styles.panelButtonTitle}>Take Photo</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.panelButton}>
+      <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
         <Text style={styles.panelButtonTitle}>Choose From Library</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -99,6 +122,7 @@ const PostItem = () => {
           <TouchableOpacity style={[styles.btn,{backgroundColor:'lightgrey'}]} onPress={()=>bs.current.snapTo(0)}>
             <Text style={{fontSize: 16}}>Choose Image</Text>
           </TouchableOpacity>
+          <Image source={{uri: image}} />
           <TouchableOpacity
           style={styles.btn}
           onPress={() => Alert.alert("Hello")}
