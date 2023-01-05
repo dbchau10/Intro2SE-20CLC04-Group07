@@ -1,6 +1,5 @@
-
-
-import React, {useRef, useState} from 'react';
+import React from 'react';
+import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,109 +17,100 @@ import {
   Image,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
+import ItemCard from '../components/ItemCard';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const green = '#98FB98';
+import { ip, port } from '../global/data';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon2 from 'react-native-vector-icons/AntDesign';
-import { parameters } from '../global/style';
-import { ItemData } from '../global/data';
-import ItemCard from '../components/ItemCard';
-const ResultItem = ({navigation}) => {
-  const [visible, setVisible] = useState(false);
-  const [data, setData] = useState([]);
-  const [search, setSearch] = useState('');
-  const searchRef = useRef();
-  const [oldData, setOldData] = useState([]);
+import Icon from 'react-native-vector-icons/Ionicons';
+import Icon2 from 'react-native-vector-icons/FontAwesome';
+
+const getItemInPage = (items, page) => {
+  return items.slice(5*(page-1), page*5);
+}
+const ResultItem = ({route, navigation}) => {
+  const {keyword} = route.params;
+  const ratingFilter = 0;
   const [isSelected, setSelection] = React.useState(false);
-  onChange = (nativeEvent) => {
+  const [items, setItems] = React.useState("");
+  const [page, setPage] = React.useState(1);
+  const [key, setKey] = React.useState(keyword);
 
+  const loadItem = async () => {
+    try {
+      const r = await fetch(`http://${ip}:${port}/items/search?keyword=${keyword}&ratingFilter=${ratingFilter}&unavailable=${isSelected?0:1}`, {
+      method: 'GET',
+      });
+      const d = await r.json();
+      setItems(d);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  if (items == "") {
+    loadItem();
   }
   return (
     <SafeAreaView style={styles.container}>
       <View style={{flexDirection: 'column'}}>
         <View style={styles.header}>
-        <View style={styles.search}>
-        <TouchableOpacity style={{padding: 5}}>
-            <Text><Icon name='search' size={18} color='black'/></Text>
-      </TouchableOpacity>
-          <TextInput
-            style={styles.input}
-            placeholder="Laptop?"
-            value={search}
-            onChangeText={txt => setSearch(txt)}
-          />
-          {search == '' ? null : (
-            <TouchableOpacity
-            style={{marginRight: 15}}
-            onPress={() => {
-                searchRef.current.clear();
-                setSearch('')
-            }}>
-                 <Text><Icon2 name='close' size={18} color='black'/></Text>
-            </TouchableOpacity>
-          )}
-          
-      </View>
-      <TouchableOpacity style={{padding: 5}}>
-            <Text><Icon name='sliders' size={18} color='black'/></Text>
-      </TouchableOpacity>
-      </View>
-      <View style={styles.filterBox}>
+            <Text style={styles.headerLogo}>Cadger</Text>
+            <Text style={styles.headerName}>Result</Text>
+        </View>
+        <View style={styles.searchContainer}>
+            <View style={styles.searchBox}>
+                <TextInput
+                style={styles.searchContent}
+                onChangeText={setKey}
+                value={key}
+                />
+                <TouchableOpacity style={styles.searchIcon} onPress={loadItem}>
+                    <Icon name='search' size={16} color='black' />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.filterBox}>
                 <Text style={styles.filterHeader}>Filter:</Text>
                 <CheckBox
                 value={isSelected}
-                onValueChange={setSelection}
+                onValueChange={loadItem, setSelection}
                 />
                 <Text style={styles.filterContent}>Unavailable</Text>
             </View>
-      </View>
-      <View style={{paddingVertical: 20}}>
-      {/* <FlatList
-            data={ItemData}
+        </View>
+        <View style={styles.productContainer}>
+          <Text style={styles.productTitle}>Products</Text>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+              if (page > 1)
+                setPage(page-1)
+            }}
+            >
+            <Text style={styles.btnText}>Previous</Text>
+            </TouchableOpacity>
+            <Text style={styles.pageText}>{page}/{items.length/5+1}</Text>
+            <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+              if (page < items.length/5)
+                setPage(page+1)
+            }}
+            >
+            <Text style={styles.btnText}>Next</Text>
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={getItemInPage(items, page)}
             keyExtractor={item => item.id}
             renderItem={({ item }) =>
-            <TouchableOpacity  onPress={() => navigation.navigate("Item")} >
+            <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: item.id})} >
              <ItemCard item={item} />
              </TouchableOpacity>
              }
-          /> */}
-          <ScrollView
-        onScroll = {({nativeEvent}) => onChange(nativeEvent)}
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        horizontal
-        style={styles.wrap}
-        >
-            {ItemData.map( ({id, imagePath, title, status, rating, borrowed}) => 
-            (<TouchableOpacity onPress={()=>navigation.navigate('Item')} style={{width:windowWidth}}>
-                <View style={styles.itemBox}>
-                  <Image
-                key={id}
-                resizeMode='cover'
-                style={{width: '90%', height: '50%'}}
-                source={imagePath}
-                >
-                </Image>
-                <View>
-                  <Text style={styles.itemTitle}>{title}</Text>
-                  <View style={{flexDirection: 'row',paddingVertical: 10,justifyContent:'space-between'}}>
-                    <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.itemRating}>{rating} <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/></Text>
-                  <Text style={styles.itemBorrowed}>{borrowed} borrowed</Text>
-                  </View>
-                  <View style={status ? [styles.itemStatusBox,{backgroundColor: '#98FB98'}] : [styles.itemStatusBox,{backgroundColor: '#EBEBEB'}]}>
-                  <Text style={styles.itemStatusText}>{status?'Available':'Unavailable'}</Text>
-                  </View>
-                   </View>
-                </View>
-                </View>
-                </TouchableOpacity>
-                )
-            )}
-        </ScrollView>
-          </View>
+          />
+        </View>
     </SafeAreaView>
   )
 }
@@ -130,10 +120,60 @@ export default ResultItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 50,
-    paddingTop: parameters.statusBarHeight,
     backgroundColor: '#fff',
-    alignItems: 'space-between'
+    justifyContent: 'space-between'
+  },
+  header: {
+    height: 0.1*windowHeight,
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+  },
+  headerLogo: {
+    flex: 1,
+    textAlign: 'left',
+    alignSelf: 'center',
+    paddingLeft: 20,
+    fontSize: 40,
+    color: green,
+    fontWeight: 'bold',
+    fontFamily: 'Changa One',
+  },
+  headerName: {
+    flex: 1,
+    textAlign: 'right',
+    alignSelf: 'center',
+    paddingRight: 30,
+    fontSize: 25,
+    color: 'black',
+    fontWeight: 'bold',
+    fontFamily: 'Changa One',
+  },
+  searchContainer: {
+    height: 0.14*windowHeight,
+  },
+  searchBox: {
+    alignSelf: 'center',
+    width: 0.7*windowWidth,
+    height: 40,
+    paddingHorizontal: 10,
+    marginTop: 30,
+    borderRadius: 20,
+    flexDirection: 'row',
+    borderWidth: 1,
+  },
+  searchContent: {
+    flex: 1,
+    textAlign: 'left',
+    alignSelf: 'center',
+    paddingLeft: 10,
+    fontSize: 15,
+    color: 'black',
+  },
+  searchIcon: {
+    flex: 1,
+    alignItems: 'flex-end',
+    alignSelf: 'center',
+    paddingRight: 10,
   },
   filterBox: {
     flexDirection: 'row',
@@ -150,32 +190,40 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: 'black',
   },
-  header: {
-   flexDirection: 'row',
-   paddingHorizontal: 20,
-   alignItems: 'center',
-   justifyContent: 'space-between',
-   width: windowWidth,
-   backgroundColor: '#fff'
-
+  productContainer: {
+    height: 0.68*windowHeight,
+    marginBottom: 0.12*windowHeight,
   },
-  input: {
-    width: 0.6*windowWidth,
-    height: 30,
-    paddingVertical: 5,
-    fontSize: 15
+  productTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'black',
+    paddingLeft: 20,
+    paddingTop: 5,
   },
-  search: {
-    justifyContent: 'space-between',
+  btnContainer: {
+    height: 0.08*windowHeight,
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    borderColor: 'gray',
-    borderWidth: 1,
-    width: 0.8*windowWidth,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    height: 50,
-    alignItems: 'center'
+    alignSelf: 'center',
+    paddingTop: 20,
+  },
+  btn: {
+    height: 0.035*windowHeight,
+    width: 0.2*windowWidth,
+    backgroundColor: green,
+    justifyContent: 'center',
+    borderRadius: 20,
+  },
+  btnText: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  pageText: {
+    color: 'black',
+    paddingTop: 5,
+    marginHorizontal: 10,
+    fontWeight: 'bold',
   },
   itemBox: {
     height: 0.5*windowHeight,

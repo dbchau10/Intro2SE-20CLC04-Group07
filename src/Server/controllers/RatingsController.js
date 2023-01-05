@@ -10,7 +10,7 @@ class RatingsController {
                 "SELECT rating_id, item_id, borrower, point, comment, to_char(date, 'dd/mm/yyyy') as date FROM itemRating where item_id = $1",
                 [id]
             );
-            res.json(rating.rows[0]);
+            res.json(rating.rows);
         }
         catch (err){
             console.error(err.message);
@@ -24,7 +24,7 @@ class RatingsController {
                 "SELECT rating_id, lender, borrower, point, comment, to_char(date, 'dd/mm/yyyy') as date FROM borrowerRating where item_id = $1",
                 [id]
             );
-            res.json(rating.rows[0]);
+            res.json(rating.rows);
         }
         catch (err){
             console.error(err.message);
