@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable jsx-quotes */
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -22,10 +22,27 @@ const green = '#98FB98';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Navbar from '../components/Navbar';
 import {parameters} from '../global/style';
-import { ItemData } from '../global/data';
+import { ip, port } from '../global/data';
 import ItemCard from '../components/ItemCard';
+import { AuthContext } from '../components/Tabs';
 const Homepage = ({route, navigation}) => {
-  // console.log(route.params.username);
+  const username = useContext(AuthContext);
+  const [keyword, setKeyword] = React.useState("");
+  const [items, setItems] = React.useState("");
+  const loadItem = async () => {
+    try {
+      const r = await fetch(`http://${ip}:${port}/items/getTopProduct`, {
+      method: 'GET',
+      });
+      const d = await r.json();
+      setItems(d);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  if (items == "") {
+    loadItem();
+  }
     useEffect(() => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
       }, [])
@@ -48,8 +65,10 @@ const Homepage = ({route, navigation}) => {
           <View style={styles.search}>
           <TextInput
             style={styles.input}
+            onChangeText={setKeyword}
+            value={keyword}
           />
-          <TouchableOpacity style={{padding: 5}} onPress={()=> navigation.navigate('ResultItem')}>
+          <TouchableOpacity style={{padding: 5}} onPress={()=> navigation.navigate('ResultItem', {keyword: keyword})}>
             <Text><Icon name='search' size={14} color='black'/></Text>
       </TouchableOpacity>
       </View>
@@ -69,10 +88,10 @@ const Homepage = ({route, navigation}) => {
             <Text>View All</Text>
             </View>
           <FlatList
-            data={ItemData}
-            keyExtractor={item => item.id}
+            data={items}
+            keyExtractor={item => item.item_id}
             renderItem={({ item }) =>
-            <TouchableOpacity  onPress={() => navigation.navigate("Item")} >
+            <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: item.item_id})} >
              <ItemCard item={item} />
              </TouchableOpacity>
              }

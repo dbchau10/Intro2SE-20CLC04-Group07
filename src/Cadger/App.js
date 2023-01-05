@@ -34,7 +34,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Login from './src/Screen/Login';
 import SignUp from './src/Screen/SignUp';
-import Result from './src/Screen/Result';
+import ResultItem from './src/Screen/ResultItem';
 import PostItem from './src/Screen/PostItem';
 import ReturnItem from './src/Screen/ReturnItem';
 import RatingItem from './src/Screen/RatingItem';

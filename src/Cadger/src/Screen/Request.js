@@ -4,7 +4,6 @@ import { parameters } from '../global/style'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import { ItemData } from '../global/data';
-import Navigation from '../components/Navigation';
 const Request = ({navigation}) => {
 
     onChange = (nativeEvent) => {
