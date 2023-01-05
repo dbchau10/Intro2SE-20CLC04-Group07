@@ -17,9 +17,11 @@ import ProfileNavigator from './ProfileNavigator';
 import Item from '../Screen/Item';
 import BorrowItem from '../Screen/BorrowItem';
 import Request from '../Screen/Request';
+import ReturnForm from '../Screen/ReturnForm';
 import RequestNavigator from './RequestNavigator';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+import MultiForm from '../Screen/MultiForm';
 const CustomTabBarButton = ({children, onPress}) => (
   <TouchableOpacity style={styles.eleBox} onPress= {onPress}>
       {children}
@@ -104,7 +106,7 @@ const Tabs = ({route}) => {
         },
         headerTitleAlign: 'center'
       }} />
-      <Tab.Screen name="Notification" component={Item}
+      <Tab.Screen name="Notification" component={MultiForm}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>
