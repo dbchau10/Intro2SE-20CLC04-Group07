@@ -25,9 +25,14 @@ const CustomTabBarButton = ({children, onPress}) => (
       {children}
     </TouchableOpacity>
 )
+
+export const AuthContext = React.createContext();
+
 const Tabs = ({route}) => {
-  const {username} = route.params;
+  const user = route.params;
+  console.log(user.username);
   return (
+    <AuthContext.Provider value={user.username}>
     <Tab.Navigator
     initialRouteName='PersonalPage'
     screenOptions={{
@@ -134,11 +139,12 @@ const Tabs = ({route}) => {
         ),
         tabBarLabel:() => {return null},
       }}
-      params={{username: username}}
+      initialParams={{username: user}}
       />
 
 
     </Tab.Navigator>
+    </AuthContext.Provider>
   );
 };
 

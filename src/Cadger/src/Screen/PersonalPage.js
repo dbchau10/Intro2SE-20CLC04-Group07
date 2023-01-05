@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable jsx-quotes */
-import React from 'react'
-
+import React, {useContext} from 'react'
+import { AuthContext } from '../components/Tabs';
 import {
     ScrollView,
     SafeAreaView,
@@ -72,7 +72,7 @@ const LendingLogPreviewCard = ({ item }) => (
 
 const PersonalPage = ({route, navigation}) => {
   // const {username} = route.params;
-  const username = 'ronaldo';
+  const username = useContext(AuthContext);
   const [info, setInfo] = React.useState("");
   const [lendingList, setLendingList] = React.useState("");
   const [borrowingLogs, setBorrowingLogs] = React.useState("");
