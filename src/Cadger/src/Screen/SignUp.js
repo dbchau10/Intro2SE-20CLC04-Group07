@@ -20,6 +20,8 @@ const SignUp = ({navigation}) => {
   const [password, onChangePassword] = React.useState(null);
   const [email, onChangeEmail] = React.useState(null);
   const [phone, onChangePhone] = React.useState(null);
+  const [show, onShow] = React.useState(false);
+  const [showPhone,onShowPhone] = React.useState(false);
   React.useEffect(() => {
     const focusHandler = navigation.addListener('focus', () => {
         onChangeUsername("");
@@ -29,6 +31,32 @@ const SignUp = ({navigation}) => {
     });
     return focusHandler;
   }, [navigation]);
+
+  const validatePhone = (event) => {
+   
+    let reg=/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
+     if (!reg.test(event))
+     {
+      onShowPhone(true);
+     }
+     else {
+      onChangePhone(event);
+      onShowPhone(false);
+     }
+  };
+
+    const validateEmail = (event) => {
+   
+    let reg=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+     if (!reg.test(event))
+     {
+      onShow(true);
+     }
+     else {
+      onChangeEmail(event);
+      onShow(false);
+     }
+  }
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -62,17 +90,23 @@ const SignUp = ({navigation}) => {
           </View>
           <TextInput
             style={styles.input}
-            onChangeText={onChangeEmail}
+            onChangeText={validateEmail}
             value={email}
           />
+           {show && (
+                <Text style={styles.warning}>Email unapproriate</Text>
+            )}
           <View>
             <Text style={styles.inputText}>Phone</Text>
           </View>
           <TextInput
             style={styles.input}
-            onChangeText={onChangePhone}
+            onChangeText={validatePhone}
             value={phone}
           />
+          {showPhone && (
+                <Text style={styles.warning}>Phone unapproriate</Text>
+            )}
         </SafeAreaView>
       </View>
       <View style={styles.signUpContainerButton}>
@@ -156,7 +190,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   input: {
-    height: 35,
+    height: 40,
     marginLeft: 80,
     marginVertical: 10,
     padding: 10,
@@ -176,6 +210,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     fontSize: 22,
+  },
+  warning: {
+    color: 'red',
+    marginLeft: 80,
   },
   btn2: {
     marginTop: 30,

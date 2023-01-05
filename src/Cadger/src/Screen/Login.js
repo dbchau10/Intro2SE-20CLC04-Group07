@@ -72,6 +72,7 @@ const Login = ({navigation}) => {
                 method: 'GET',
                 });
                 data = await r.json();
+                console.log(data);
               } catch (err) {
                 console.log(err.message);
               }
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   input: {
-    height: 35,
+    height: 40,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginLeft: 80,
