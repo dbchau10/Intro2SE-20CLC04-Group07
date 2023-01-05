@@ -33,8 +33,13 @@ const ResultItem = ({navigation}) => {
   const [search, setSearch] = useState('');
   const searchRef = useRef();
   const [oldData, setOldData] = useState([]);
+  const [isSelected, setSelection] = React.useState(false);
+  onChange = (nativeEvent) => {
+
+  }
   return (
     <SafeAreaView style={styles.container}>
+      <View style={{flexDirection: 'column'}}>
         <View style={styles.header}>
         <View style={styles.search}>
         <TouchableOpacity style={{padding: 5}}>
@@ -62,8 +67,17 @@ const ResultItem = ({navigation}) => {
             <Text><Icon name='sliders' size={18} color='black'/></Text>
       </TouchableOpacity>
       </View>
-      <View style={{paddingTop: 100}}>
-      <FlatList
+      <View style={styles.filterBox}>
+                <Text style={styles.filterHeader}>Filter:</Text>
+                <CheckBox
+                value={isSelected}
+                onValueChange={setSelection}
+                />
+                <Text style={styles.filterContent}>Unavailable</Text>
+            </View>
+      </View>
+      <View style={{paddingVertical: 20}}>
+      {/* <FlatList
             data={ItemData}
             keyExtractor={item => item.id}
             renderItem={({ item }) =>
@@ -71,7 +85,41 @@ const ResultItem = ({navigation}) => {
              <ItemCard item={item} />
              </TouchableOpacity>
              }
-          />
+          /> */}
+          <ScrollView
+        onScroll = {({nativeEvent}) => onChange(nativeEvent)}
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled
+        horizontal
+        style={styles.wrap}
+        >
+            {ItemData.map( ({id, imagePath, title, status, rating, borrowed}) => 
+            (<TouchableOpacity onPress={()=>navigation.navigate('Item')} style={{width:windowWidth}}>
+                <View style={styles.itemBox}>
+                  <Image
+                key={id}
+                resizeMode='cover'
+                style={{width: '90%', height: '50%'}}
+                source={imagePath}
+                >
+                </Image>
+                <View>
+                  <Text style={styles.itemTitle}>{title}</Text>
+                  <View style={{flexDirection: 'row',paddingVertical: 10,justifyContent:'space-between'}}>
+                    <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.itemRating}>{rating} <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/></Text>
+                  <Text style={styles.itemBorrowed}>{borrowed} borrowed</Text>
+                  </View>
+                  <View style={status ? [styles.itemStatusBox,{backgroundColor: '#98FB98'}] : [styles.itemStatusBox,{backgroundColor: '#EBEBEB'}]}>
+                  <Text style={styles.itemStatusText}>{status?'Available':'Unavailable'}</Text>
+                  </View>
+                   </View>
+                </View>
+                </View>
+                </TouchableOpacity>
+                )
+            )}
+        </ScrollView>
           </View>
     </SafeAreaView>
   )
@@ -84,18 +132,30 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 50,
     paddingTop: parameters.statusBarHeight,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    alignItems: 'space-between'
+  },
+  filterBox: {
+    flexDirection: 'row',
+    marginTop: 15,
+    justifyContent: 'center',
+  },
+  filterHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  filterContent: {
+    fontSize: 16,
+    alignSelf: 'center',
+    color: 'black',
   },
   header: {
    flexDirection: 'row',
-   padding: 20,
+   paddingHorizontal: 20,
    alignItems: 'center',
    justifyContent: 'space-between',
    width: windowWidth,
-   position: 'absolute',
-   top: 0,
-   left: 0,
-   zIndex: 10,
    backgroundColor: '#fff'
 
   },
@@ -109,7 +169,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     paddingHorizontal: 20,
-    marginVertical: 15,
     borderRadius: 10,
     borderColor: 'gray',
     borderWidth: 1,
@@ -118,4 +177,49 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center'
   },
-})
+  itemBox: {
+    height: 0.5*windowHeight,
+    width: 0.85*windowWidth,
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    borderRadius: 20,
+    marginVertical: 7,
+    flexDirection: 'column',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 1.0,
+    shadowRadius: 1.0,
+    elevation: 5,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  itemTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingTop: 10,
+    color: 'black'
+  },
+  itemStatusBox: {
+    height: 25,
+    width: 100,
+    padding: 2,
+    borderRadius: 10, 
+  },
+  itemStatusText: {
+    textAlign: 'center',
+    color: 'black',
+  },
+  itemRating: {
+    textAlign: 'right',
+    paddingRight: 5,
+  },
+  itemBorrowed: {
+    textAlign: 'right',
+    paddingRight: 5,
+  },
+}
+)

@@ -20,7 +20,10 @@ const HomeNavigator = () => {
        <HomeStack.Screen
           name="ResultItem"
           component={ResultItem}
-          options={{headerShown: false}}
+          options={{
+            title: 'Result Return',
+            headerTitleAlign: 'center'
+          }}
         /> 
         <HomeStack.Screen
           name="Item"
