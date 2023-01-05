@@ -27,10 +27,10 @@ import Icon2 from 'react-native-vector-icons/FontAwesome';
 
 
 const PostItem = () => {
-  const [name, onChangeName] = React.useState(null);
-  const [desc, onChangeDesc] = React.useState(null);
-  const [img, onChangeImg] = React.useState(null);
+  const [name, onChangeName] = useState(null);
+  const [desc, onChangeDesc] = useState(null);
   const [image, setImage] = useState(null);
+  const [check,onCheck]=useState(false);
   const bs = React.createRef();
     const fall = new Animated.Value(1);
     const takePhotoFromCamera = () => {
@@ -42,6 +42,7 @@ const PostItem = () => {
       }).then(image => {
         console.log(image);
         setImage(image.path);
+        onCheck(true);
         this.bs.current.snapTo(1);
       });
     }
@@ -54,6 +55,7 @@ const PostItem = () => {
         compressImageQuality: 0.7
       }).then(image => {
         console.log(image);
+        onCheck(true);
         setImage(image.path);
         this.bs.current.snapTo(1);
       });
@@ -100,10 +102,10 @@ const PostItem = () => {
         callbackNode={fall}
         enabledGestureInteraction={true}
         />
-      <Animated.ScrollView style={{margin: 20, marginBottom: 50, 
+      <Animated.View style={{margin: 20, marginBottom: 50, 
         opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-    }}></Animated.ScrollView>
-        <View style={styles.body}>
+    }}></Animated.View>
+        <ScrollView style={styles.body}>
           <Text style={styles.title}>Name</Text>
           <TextInput 
             style={styles.box}
@@ -119,17 +121,23 @@ const PostItem = () => {
             value={desc}
           />
           <Text style={styles.title}>Image URL</Text>
+          {!check && (
           <TouchableOpacity style={[styles.btn,{backgroundColor:'lightgrey'}]} onPress={()=>bs.current.snapTo(0)}>
             <Text style={{fontSize: 16}}>Choose Image</Text>
           </TouchableOpacity>
-          <Image source={{uri: image}} />
+          )}
+          {check && (
+        <View style={{alignItems: 'center',padding: 20}}>
+          <Image width={250} height={250} source={{uri: image}} />
+          </View>
+          )}
           <TouchableOpacity
           style={styles.btn}
           onPress={() => Alert.alert("Hello")}
           >
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
-        </View>
+        </ScrollView>
     </SafeAreaView>
   )
 }
@@ -145,9 +153,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   body: {
-    height: 0.8*windowHeight,
+    
     alignSelf: 'center',
-    paddingTop: 30,
+   
   },
   title: {
     fontWeight: 'bold',
