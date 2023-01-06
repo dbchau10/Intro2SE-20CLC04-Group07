@@ -5,6 +5,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
 const Tab = createBottomTabNavigator();
 import Homepage from '../Screen/Homepage';
+import Result from '../Screen/Result';
 import ResultItem from '../Screen/ResultItem';
 import PostItem from '../Screen/PostItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -31,6 +32,7 @@ export const AuthContext = React.createContext();
 
 const Tabs = ({route}) => {
   const user = route.params;
+  console.log(user.username);
   return (
     <AuthContext.Provider value={user.username}>
     <Tab.Navigator
@@ -43,7 +45,7 @@ const Tabs = ({route}) => {
         backgroundColor: '#fff',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-      height: 0.1*windowHeight,
+      height: 70,
     ...styles.shadow },
     }}>
 

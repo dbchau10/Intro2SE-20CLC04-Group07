@@ -22,13 +22,13 @@ const ItemCard = ({ item, navigation }) => (
       />  
     </View>
     <View style={styles.itemContentBox}>
-      <Text style={styles.itemTitle}>{item.name}</Text>
+      <Text style={styles.itemTitle}>{item.title}</Text>
       <View style={item.status ? styles.itemStatusBox1 : styles.itemStatusBox2}>
         <Text style={styles.itemStatusText}>{item.status?'Available':'Unavailable'}</Text>
       </View>
       <View style={styles.itemDescription}>
       <Text style={styles.itemRating}>{item.rating} <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/></Text>
-      <Text style={styles.itemBorrowed}>{item.borrow_times} borrowed</Text>
+      <Text style={styles.itemBorrowed}>{item.borrowed} borrowed</Text>
       </View>
     </View>
   </View>

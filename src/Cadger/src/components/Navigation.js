@@ -7,7 +7,7 @@ import Login from '../Screen/Login';
 import SignUp from '../Screen/SignUp';
 import Admin from '../Screen/Admin';
 import SuspendAccount from '../Screen/SuspendAccount';
-import Result from '../Screen/ResultItem';
+import Result from '../Screen/Result';
 import Homepage from '../Screen/Homepage';
 import HomeNavigator from './HomeNavigator';
 import Tabs from './Tabs';

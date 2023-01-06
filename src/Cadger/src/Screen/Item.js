@@ -3,62 +3,12 @@ import React from 'react'
 import { parameters } from '../global/style'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-import { commentData, ItemData, ip, port } from '../global/data';
+import { commentData, ItemData } from '../global/data';
 const green = '#98FB98';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ItemComment from '../components/ItemComment';
 import ItemCard from '../components/ItemCard';
-
-const RatingStar = () => {
-  
-}
-
-const Item = ({route, navigation}) => {
-  const {item_id} = route.params;
-  const [info, setInfo] = React.useState("");
-  const [ratings, setRatings] = React.useState("");
-  const [products, setProducts] = React.useState("");
-  let ratingsPreview;
-  const loadInfo = async () => {
-    try {
-      Promise.all([
-        fetch(`http://${ip}:${port}/items/getById/${item_id}`, {
-        method: 'GET',
-        }),
-        fetch(`http://${ip}:${port}/ratings/readItemRating/${item_id}`, {
-        method: 'GET',
-        }),
-        fetch(`http://${ip}:${port}/items/getOtherProduct/${item_id}`, {
-        method: 'GET',
-        })
-      ]).then(async allResponses => {
-        const r1 = allResponses[0];
-        const r2 = allResponses[1];
-        const r3 = allResponses[2];
-        const d1 = await r1.json();
-        const d2 = await r2.json();
-        const d3 = await r3.json();
-        setInfo(d1);
-        setRatings(d2);
-        setProducts(d3);
-        ratingsPreview = ratings.slice(0, 3);
-      })
-    } catch (err) {
-      console.log(err.message);
-    }
-    try {
-      const r = await fetch(`http://${ip}:${port}/items/getById/${item_id}`, {
-      method: 'GET',
-      });
-      const d = await r.json();
-      setInfo(d);
-    } catch (err) {
-      console.log(err.message);
-    }
-  }
-  if (info == "") {
-    loadInfo();
-  }
+const Item = ({navigation}) => {
   return (
    <SafeAreaView style={styles.container}>
     <ScrollView bounces={false}>
@@ -69,18 +19,18 @@ const Item = ({route, navigation}) => {
     </View>
     <View style={styles.header}>
         <Text style={styles.textHeader}>
-            {info.name}
+            Laptop cũ phục vụ mục đích học tập
             </Text>
             <View style={{flexDirection: 'column', alignItems: 'center', width: "30%"}}>
         <View style={{flexDirection: 'row', position: 'relative',paddingVertical: 10}}>
-        <Icon style={styles.eleIcon} name='star' size={16} color={info.rating>=1?'#F1CF1C':'lightgrey'}/>
-        <Icon style={styles.eleIcon} name='star' size={16} color={info.rating>=2?'#F1CF1C':'lightgrey'}/>
-        <Icon style={styles.eleIcon} name='star' size={16} color={info.rating>=3?'#F1CF1C':'lightgrey'}/>
-        <Icon style={styles.eleIcon} name='star' size={16} color={info.rating>=4?'#F1CF1C':'lightgrey'}/>
-        <Icon style={styles.eleIcon} name='star' size={16} color={info.rating>=5?'#F1CF1C':'lightgrey'}/>
+        <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
+        <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
+        <Icon style={styles.eleIcon} name='star' size={16} color='#F1CF1C'/>
+        <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
+        <Icon style={styles.eleIcon} name='star' size={16} color='lightgrey'/>
         </View>
         <View style={styles.itemStatusBox}>
-                <Text style={styles.itemStatusText}>{info.status?"Available":"Unavailable"}</Text>
+                <Text style={styles.itemStatusText}>Available</Text>
             </View>
             </View>
         
@@ -92,7 +42,7 @@ const Item = ({route, navigation}) => {
         source={require('../../assets/pictures/avatar.jpg')}
               />
               <View>
-            <Text style={styles.username}>{info.lender}</Text>
+            <Text style={styles.username}>alsophanie</Text>
             <TouchableOpacity style={styles.button} onPress={()=>console.log(ItemData)} onPress={()=>navigation.navigate('BorrowItem')}>
                 <Text style={{fontWeight: 'bold', fontSize: 14}}>Borrow Now</Text>
             </TouchableOpacity>
@@ -102,23 +52,23 @@ const Item = ({route, navigation}) => {
     <View style={styles.profile}>
         <View style={styles.descriptionHeader}>
             <Text style={{fontWeight: 'bold', fontSize: 16}}>Description</Text>
-            <Text style={{fontStyle: 'italic'}}>{info.borrow_times} borrowed</Text>
+            <Text style={{fontStyle: 'italic'}}>273 borrowed</Text>
             </View>
     </View>
     <View style={styles.description}>
-            <Text>{info.description}</Text>
+            <Text>Máy tính tiện lợi giúp bạn chơi đùa cùng deadline và ngồi ở nhà coi wc</Text>
     </View>
     <View style={styles.profile}>
     <View style={styles.descriptionHeader}>
             <Text style={{fontWeight: 'bold', fontSize: 16}}>Product Ratings</Text>
             <Text style={styles.itemRating}> <Icon name='star' size={16} color='#F1CF1C'/>
-             {info.rating}/5 ({ratings.length})
+             3/5 (20)
             </Text>
     </View>
     </View>
     <FlatList
-            data={ratingsPreview}
-            keyExtractor={rating => rating.rating_id}
+            data={commentData}
+            keyExtractor={(comment) => comment.id}
             renderItem={ItemComment}
           />
           <View style={styles.description}>
@@ -126,13 +76,13 @@ const Item = ({route, navigation}) => {
           </View>
           <View style={styles.profile}>
                 <View style={{alignItems: 'center',width: '100%'}}>
-                    <Text style={{paddingVertical: 10}}>Sản phẩm khác</Text>
+                    <Text style={{paddingVertical: 10}}>Sản phẩm tương tự</Text>
                     <FlatList
-                    data={products}
-                    keyExtractor={product => product.item_id}
-                    renderItem={({ product }) =>
-                    <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: product.item_id})} >
-                     <ItemCard item={product} />
+                    data={ItemData}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) =>
+                    <TouchableOpacity  onPress={() => navigation.navigate("Item")} >
+                     <ItemCard item={item} />
                      </TouchableOpacity>
                      }
                  />

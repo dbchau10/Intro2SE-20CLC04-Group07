@@ -138,6 +138,6 @@ export const returnRequest =[
   }
 ];
 // IP hcmus public
-// export const ip = "10.126.3.69";
-export const ip = "192.168.1.10";
+export const ip = "10.126.3.69";
+// export const ip = "192.168.1.14";
 export const port = "3000";

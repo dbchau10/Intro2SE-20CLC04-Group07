@@ -40,20 +40,7 @@ class ItemsController {
     async getTopProduct(req, res) {
         try {
             const item = await pool.query(
-                "SELECT * FROM item ORDER BY borrow_times desc limit 5"
-            );
-            res.json(item.rows);
-        }
-        catch (err){
-            console.error(err.message);
-        }
-    }
-    // [GET]
-    async getOtherProduct(req, res) {
-        try {
-            const {id} = req.params;
-            const item = await pool.query(
-                "SELECT * FROM item WHERE item_id != $1 ORDER BY borrow_times desc limit 5",
+                "SELECT TOP 5 * FROM item ORDER BY borrowed desc",
                 [id]
             );
             res.json(item.rows);

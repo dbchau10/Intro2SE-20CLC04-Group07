@@ -1,5 +1,6 @@
-import React from 'react';
-import type {Node} from 'react';
+
+
+import React, {useRef, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -17,100 +18,62 @@ import {
   Image,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import ItemCard from '../components/ItemCard';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const green = '#98FB98';
-import { ip, port } from '../global/data';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-import Icon2 from 'react-native-vector-icons/FontAwesome';
-
-const getItemInPage = (items, page) => {
-  return items.slice(5*(page-1), page*5);
-}
-const ResultItem = ({route, navigation}) => {
-  const {keyword} = route.params;
-  const ratingFilter = 0;
-  const [isSelected, setSelection] = React.useState(false);
-  const [items, setItems] = React.useState("");
-  const [page, setPage] = React.useState(1);
-  const [key, setKey] = React.useState(keyword);
-
-  const loadItem = async () => {
-    try {
-      const r = await fetch(`http://${ip}:${port}/items/search?keyword=${keyword}&ratingFilter=${ratingFilter}&unavailable=${isSelected?0:1}`, {
-      method: 'GET',
-      });
-      const d = await r.json();
-      setItems(d);
-    } catch (err) {
-      console.log(err.message);
-    }
-  }
-  if (items == "") {
-    loadItem();
-  }
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/AntDesign';
+import { parameters } from '../global/style';
+import { ItemData } from '../global/data';
+import ItemCard from '../components/ItemCard';
+const ResultItem = ({navigation}) => {
+  const [visible, setVisible] = useState(false);
+  const [data, setData] = useState([]);
+  const [search, setSearch] = useState('');
+  const searchRef = useRef();
+  const [oldData, setOldData] = useState([]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={{flexDirection: 'column'}}>
         <View style={styles.header}>
-            <Text style={styles.headerLogo}>Cadger</Text>
-            <Text style={styles.headerName}>Result</Text>
-        </View>
-        <View style={styles.searchContainer}>
-            <View style={styles.searchBox}>
-                <TextInput
-                style={styles.searchContent}
-                onChangeText={setKey}
-                value={key}
-                />
-                <TouchableOpacity style={styles.searchIcon} onPress={loadItem}>
-                    <Icon name='search' size={16} color='black' />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.filterBox}>
-                <Text style={styles.filterHeader}>Filter:</Text>
-                <CheckBox
-                value={isSelected}
-                onValueChange={loadItem, setSelection}
-                />
-                <Text style={styles.filterContent}>Unavailable</Text>
-            </View>
-        </View>
-        <View style={styles.productContainer}>
-          <Text style={styles.productTitle}>Products</Text>
-          <View style={styles.btnContainer}>
+        <View style={styles.search}>
+        <TouchableOpacity style={{padding: 5}}>
+            <Text><Icon name='search' size={18} color='black'/></Text>
+      </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder="Laptop?"
+            value={search}
+            onChangeText={txt => setSearch(txt)}
+          />
+          {search == '' ? null : (
             <TouchableOpacity
-            style={styles.btn}
+            style={{marginRight: 15}}
             onPress={() => {
-              if (page > 1)
-                setPage(page-1)
-            }}
-            >
-            <Text style={styles.btnText}>Previous</Text>
+                searchRef.current.clear();
+                setSearch('')
+            }}>
+                 <Text><Icon2 name='close' size={18} color='black'/></Text>
             </TouchableOpacity>
-            <Text style={styles.pageText}>{page}/{items.length/5+1}</Text>
-            <TouchableOpacity
-            style={styles.btn}
-            onPress={() => {
-              if (page < items.length/5)
-                setPage(page+1)
-            }}
-            >
-            <Text style={styles.btnText}>Next</Text>
-            </TouchableOpacity>
-          </View>
-          <FlatList
-            data={getItemInPage(items, page)}
+          )}
+          
+      </View>
+      <TouchableOpacity style={{padding: 5}}>
+            <Text><Icon name='sliders' size={18} color='black'/></Text>
+      </TouchableOpacity>
+      </View>
+      <View style={{paddingTop: 100}}>
+      <FlatList
+            data={ItemData}
             keyExtractor={item => item.id}
             renderItem={({ item }) =>
-            <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: item.id})} >
+            <TouchableOpacity  onPress={() => navigation.navigate("Item")} >
              <ItemCard item={item} />
              </TouchableOpacity>
              }
           />
-        </View>
+          </View>
     </SafeAreaView>
   )
 }
@@ -120,110 +83,41 @@ export default ResultItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'space-between'
+    marginBottom: 50,
+    paddingTop: parameters.statusBarHeight,
+    backgroundColor: '#fff'
   },
   header: {
-    height: 0.1*windowHeight,
+   flexDirection: 'row',
+   padding: 20,
+   alignItems: 'center',
+   justifyContent: 'space-between',
+   width: windowWidth,
+   position: 'absolute',
+   top: 0,
+   left: 0,
+   zIndex: 10,
+   backgroundColor: '#fff'
+
+  },
+  input: {
+    width: 0.6*windowWidth,
+    height: 30,
+    paddingVertical: 5,
+    fontSize: 15
+  },
+  search: {
+    justifyContent: 'space-between',
     flexDirection: 'row',
-    borderBottomWidth: 1,
-  },
-  headerLogo: {
-    flex: 1,
-    textAlign: 'left',
-    alignSelf: 'center',
-    paddingLeft: 20,
-    fontSize: 40,
-    color: green,
-    fontWeight: 'bold',
-    fontFamily: 'Changa One',
-  },
-  headerName: {
-    flex: 1,
-    textAlign: 'right',
-    alignSelf: 'center',
-    paddingRight: 30,
-    fontSize: 25,
-    color: 'black',
-    fontWeight: 'bold',
-    fontFamily: 'Changa One',
-  },
-  searchContainer: {
-    height: 0.14*windowHeight,
-  },
-  searchBox: {
-    alignSelf: 'center',
-    width: 0.7*windowWidth,
-    height: 40,
-    paddingHorizontal: 10,
-    marginTop: 30,
-    borderRadius: 20,
-    flexDirection: 'row',
+    paddingHorizontal: 20,
+    marginVertical: 15,
+    borderRadius: 10,
+    borderColor: 'gray',
     borderWidth: 1,
-  },
-  searchContent: {
-    flex: 1,
-    textAlign: 'left',
-    alignSelf: 'center',
-    paddingLeft: 10,
-    fontSize: 15,
-    color: 'black',
-  },
-  searchIcon: {
-    flex: 1,
-    alignItems: 'flex-end',
-    alignSelf: 'center',
-    paddingRight: 10,
-  },
-  filterBox: {
-    flexDirection: 'row',
-    marginTop: 15,
-    justifyContent: 'center',
-  },
-  filterHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  filterContent: {
-    fontSize: 16,
-    alignSelf: 'center',
-    color: 'black',
-  },
-  productContainer: {
-    height: 0.68*windowHeight,
-    marginBottom: 0.12*windowHeight,
-  },
-  productTitle: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'black',
-    paddingLeft: 20,
-    paddingTop: 5,
-  },
-  btnContainer: {
-    height: 0.08*windowHeight,
-    flexDirection: 'row',
-    alignSelf: 'center',
-    paddingTop: 20,
-  },
-  btn: {
-    height: 0.035*windowHeight,
-    width: 0.2*windowWidth,
-    backgroundColor: green,
-    justifyContent: 'center',
-    borderRadius: 20,
-  },
-  btnText: {
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  pageText: {
-    color: 'black',
-    paddingTop: 5,
-    marginHorizontal: 10,
-    fontWeight: 'bold',
+    width: 0.8*windowWidth,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    height: 50,
+    alignItems: 'center'
   },
   itemBox: {
     height: 0.5*windowHeight,

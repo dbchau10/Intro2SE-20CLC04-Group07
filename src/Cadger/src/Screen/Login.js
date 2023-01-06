@@ -20,8 +20,8 @@ const encrypt = (password) => {
 }
 
 const Login = ({navigation}) => {
-  const [username, onChangeUsername] = React.useState("");
-  const [password, onChangePassword] = React.useState("");
+  const [username, onChangeUsername] = React.useState(null);
+  const [password, onChangePassword] = React.useState(null);
   React.useEffect(() => {
     const focusHandler = navigation.addListener('focus', () => {
         onChangeUsername("");
@@ -63,7 +63,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.btn1}
           onPress={async() => {
-            if (username === "" || password === "") {
+            if (username === null || password === null) {
               Alert.alert("Username and password required!");
             } else {
               let data;
@@ -72,6 +72,7 @@ const Login = ({navigation}) => {
                 method: 'GET',
                 });
                 data = await r.json();
+                console.log(data);
               } catch (err) {
                 console.log(err.message);
               }
