@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -24,9 +24,10 @@ const green = '#98FB98';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
-
-
+import { AuthContext } from '../components/Tabs';
+import { ip, port } from '../global/data';
 const PostItem = () => {
+  const username = useContext(AuthContext);
   const [name, onChangeName] = useState(null);
   const [desc, onChangeDesc] = useState(null);
   const [image, setImage] = useState(null);
@@ -136,7 +137,34 @@ const PostItem = () => {
           )}
           <TouchableOpacity
           style={styles.btn}
-          onPress={() => Alert.alert("Hello")}
+          onPress={async() => {
+            if (name === null) {
+              Alert.alert('Name required!');
+            } else if (image === null) {
+              Alert.alert('Picture required!');
+            } else {
+              try {
+                const formData = new FormData();
+                formData.append({
+                  name: name,
+                  lender: username,
+                  img: image,
+                  description: desc,
+                })
+                const r = await fetch(`http://${ip}:${port}/items/create`, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'multipart/form-dât'
+                },
+                body: formData
+                });
+              } catch (err) {
+                console.log(err.message);
+              }
+              
+            }
+          }}
           >
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
