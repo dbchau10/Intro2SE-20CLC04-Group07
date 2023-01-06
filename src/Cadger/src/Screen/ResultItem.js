@@ -74,6 +74,7 @@ const ResultItem = ({navigation}) => {
              }
           />
           </View>
+      </View>
     </SafeAreaView>
   )
 }

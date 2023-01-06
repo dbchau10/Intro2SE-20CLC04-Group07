@@ -43,8 +43,9 @@ const PostItem = () => {
         console.log(image);
         setImage(image.path);
         onCheck(true);
-        this.bs.current.snapTo(1);
       });
+
+      bs.current.snapTo(1);
     }
   
     const choosePhotoFromLibrary = () => {
@@ -57,8 +58,10 @@ const PostItem = () => {
         console.log(image);
         onCheck(true);
         setImage(image.path);
-        this.bs.current.snapTo(1);
+        
       });
+
+      bs.current.snapTo(1);
     }
     const renderInner = () => (
         <View style={styles.panel}>
