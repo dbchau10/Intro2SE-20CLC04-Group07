@@ -22,6 +22,8 @@ import RequestNavigator from './RequestNavigator';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import MultiForm from '../Screen/MultiForm';
+
+import AllBorrowingList from '../Screen/AllBorrowingList';
 const CustomTabBarButton = ({children, onPress}) => (
   <TouchableOpacity style={styles.eleBox} onPress= {onPress}>
       {children}
@@ -106,7 +108,7 @@ const Tabs = ({route}) => {
         },
         headerTitleAlign: 'center'
       }} />
-      <Tab.Screen name="Notification" component={MultiForm}
+      <Tab.Screen name="Notification" component={AllBorrowingList}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={styles.eleBox}>
