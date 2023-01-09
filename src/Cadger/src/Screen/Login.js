@@ -76,7 +76,11 @@ const Login = ({navigation}) => {
                 console.log(err.message);
               }
               if (data.password === encrypt(password))
-                navigation.navigate('Tabs', {username: username});
+                if (username === "admin") {
+                  navigation.navigate('Admin');
+                }else {
+                  navigation.navigate('Tabs', {username: username});
+                }
               else
                 Alert.alert("Login failed!");
             }

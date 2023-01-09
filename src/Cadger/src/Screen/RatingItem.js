@@ -22,7 +22,7 @@ const green = '#98FB98';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
-const RatingItem: () => Node = () => {
+const RatingItem = ({route, navigation}) => {
   const [rating, onChangeRating] = React.useState(null);
   const [place, onChangePlace] = React.useState(null);
   const name = 'Laptop';
@@ -51,13 +51,18 @@ const RatingItem: () => Node = () => {
           />
           <TouchableOpacity
           style={styles.btn}
-          onPress={() => Alert.alert("Hello")}
+          onPress={() => {
+            Alert.alert("Rate successfully");
+            navigation.navigate("HomePage");
+          }}
           >
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnSkip}
-          onPress={() => Alert.alert("Hello")}
+          onPress={() => {
+            navigation.navigate("HomePage");
+          }}
           >
           <Text style={styles.btnSkipText}>Skip</Text>
         </TouchableOpacity>

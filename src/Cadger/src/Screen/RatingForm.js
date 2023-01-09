@@ -20,7 +20,7 @@ import Icon2 from 'react-native-vector-icons/FontAwesome';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {parameters} from '../global/style';
 import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
-const RatingForm = () => {
+const RatingForm = ({route, navigation}) => {
   const [reason, onChangeReason] = React.useState(null);
   const [defaultRating, setDefaultRating]=React.useState(2);
   const [maxRating, setMaxRating]=React.useState([1,2,3,4,5]);
@@ -35,7 +35,7 @@ const RatingForm = () => {
                     key={item}
                     onPress={()=>setDefaultRating(item)}
                     >
-                        <Icon name='star' size={25} color={item <=defaultRating ? '#F1CF1C' : '#EBEBEB'}/>
+                        <Icon name='star' size={25} color={item <= defaultRating ? '#F1CF1C' : '#EBEBEB'}/>
                     </TouchableOpacity>
                 )
                }

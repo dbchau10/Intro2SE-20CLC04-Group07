@@ -14,64 +14,64 @@ import {
     Image,
     Alert
   } from 'react-native';
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
-  const green = '#98FB98';
-  import Icon from 'react-native-vector-icons/MaterialIcons';
-  import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
-  import Navbar from '../components/Navbar';
-  import {parameters} from '../global/style';
-  import { ip, port } from '../global/data';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const green = '#98FB98';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
+import Navbar from '../components/Navbar';
+import {parameters} from '../global/style';
+import { ip, port } from '../global/data';
 import ItemPreviewCard from '../components/ItemPreviewCard';
 
-const BorrowingLogPreviewCard = ({ item }) => (
-  <View style={styles.logItemBox}>
-    <View style={styles.logTitle}>
-        <Text>#{item.log_id}</Text>
-        <View style={{flexDirection: 'row',alignItems: 'center'}}>
-            <Text style={{paddingHorizontal: 5}}>{item.lender}</Text>
-            <TouchableOpacity>
-            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-            </TouchableOpacity>
-        </View>
-    </View>
-    <View style={styles.logItem}>
-        <Image source={require('../../assets/pictures/laptop.jpg')}
-            style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
-          />
-          <View style={styles.logItemDescription}>
-            <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
-            <Text>{item.date}</Text>
-        </View>
-    </View>
-  </View>
-);
-
-const LendingLogPreviewCard = ({ item }) => (
-  <View style={styles.logItemBox}>
-    <View style={styles.logTitle}>
-        <Text>#{item.log_id}</Text>
-        <View style={{flexDirection: 'row',alignItems: 'center'}}>
-            <Text style={{paddingHorizontal: 5}}>{item.borrower}</Text>
-            <TouchableOpacity>
-            <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
-            </TouchableOpacity>
-        </View>
-    </View>
-    <View style={styles.logItem}>
-        <Image source={require('../../assets/pictures/laptop.jpg')}
-            style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
-          />
-          <View style={styles.logItemDescription}>
-            <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
-            <Text>{item.date}</Text>
-        </View>
-    </View>
-  </View>
-);
-
 const PersonalPage = ({route, navigation}) => {
-  // const {username} = route.params;
+  const BorrowingLogPreviewCard = ({ item }) => (
+    <View style={styles.logItemBox}>
+      <View style={styles.logTitle}>
+          <Text>#{item.log_id}</Text>
+          <View style={{flexDirection: 'row',alignItems: 'center'}}>
+              <Text style={{paddingHorizontal: 5}}>{item.lender}</Text>
+              <TouchableOpacity onPress={() => {
+                navigation.navigate("MultiForm", {item_id: item.item_id});
+              }}>
+              <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+              </TouchableOpacity>
+          </View>
+      </View>
+      <View style={styles.logItem}>
+          <Image source={require('../../assets/pictures/laptop.jpg')}
+              style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
+            />
+            <View style={styles.logItemDescription}>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
+              <Text>{item.date}</Text>
+          </View>
+      </View>
+    </View>
+  );
+  
+  const LendingLogPreviewCard = ({ item }) => (
+    <View style={styles.logItemBox}>
+      <View style={styles.logTitle}>
+          <Text>#{item.log_id}</Text>
+          <View style={{flexDirection: 'row',alignItems: 'center'}}>
+              <Text style={{paddingHorizontal: 5}}>{item.borrower}</Text>
+              <TouchableOpacity>
+              <Icon name='keyboard-arrow-right' size={16} color='lightgrey'/>
+              </TouchableOpacity>
+          </View>
+      </View>
+      <View style={styles.logItem}>
+          <Image source={require('../../assets/pictures/laptop.jpg')}
+              style = {{ width: '25%', height: windowHeight*0.1, resizeMode: 'center', borderRadius: 20}}
+            />
+            <View style={styles.logItemDescription}>
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
+              <Text>{item.date}</Text>
+          </View>
+      </View>
+    </View>
+  );
   const username = useContext(AuthContext);
   const [info, setInfo] = React.useState("");
   const [lendingList, setLendingList] = React.useState("");
@@ -179,7 +179,7 @@ const PersonalPage = ({route, navigation}) => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             data={lendingList}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.item_id}
             renderItem={ItemPreviewCard}
           />
            <TouchableOpacity

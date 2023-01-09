@@ -29,23 +29,39 @@ const Homepage = ({route, navigation}) => {
   const username = useContext(AuthContext);
   const [keyword, setKeyword] = React.useState("");
   const [items, setItems] = React.useState("");
-  const loadItem = async () => {
+  const [info, setInfo] = React.useState("");
+  const loadData = async () => {
     try {
-      const r = await fetch(`http://${ip}:${port}/items/getTopProduct`, {
-      method: 'GET',
-      });
-      const d = await r.json();
-      setItems(d);
+      Promise.all([
+        fetch(`http://${ip}:${port}/items/getTopProduct`, {
+        method: 'GET',
+        }),
+        fetch(`http://${ip}:${port}/accounts/info/${username}`, {
+        method: 'GET',
+        })
+      ]).then(async allResponses => {
+        const r1 = allResponses[0];
+        const r2 = allResponses[1];
+        const d1 = await r1.json();
+        const d2 = await r2.json();
+        setItems(d1);
+        setInfo(d2);
+      })
+
     } catch (err) {
       console.log(err.message);
     }
   }
   if (items == "") {
-    loadItem();
+    loadData();
   }
-    useEffect(() => {
-        LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
-      }, [])
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
+    const focusHandler = navigation.addListener('focus', () => {
+      loadData();
+    });
+    return focusHandler;
+    }, [navigation])
   return (
     <SafeAreaView style={styles.container}>
         <ScrollView 
@@ -58,7 +74,7 @@ const Homepage = ({route, navigation}) => {
               />
               <View style={styles.welcomeText}>
               <Text style={styles.text1}>Welcome</Text>
-              <Text style={styles.text2}>Alice</Text>
+              <Text style={styles.text2}>{info.name}</Text>
               </View>
           </View>
           <View style={styles.searchArea}>

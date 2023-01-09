@@ -6,7 +6,8 @@ const windowHeight = Dimensions.get('window').height;
 import { parameters } from '../global/style';
 import ReturnForm from './ReturnForm';
 import RatingForm from './RatingForm';
-const MultiForm = () => {
+const MultiForm = ({route, navigation}) => {
+  const {item_id} = route.params;
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.body}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -16,8 +16,10 @@ import {
   Image,
 } from 'react-native';
 import { parameters } from '../global/style';
-import Animated from 'react-native-reanimated';
-import BottomSheet from 'reanimated-bottom-sheet';
+import { ip, port } from '../global/data';
+import { AuthContext } from '../components/Tabs';
+// import Animated from 'react-native-reanimated';
+// import BottomSheet from 'reanimated-bottom-sheet';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const green = '#98FB98';
@@ -26,72 +28,71 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 
 
-const PostItem = () => {
-  const [name, onChangeName] = useState(null);
-  const [desc, onChangeDesc] = useState(null);
-  const [image, setImage] = useState(null);
-  const [check,onCheck]=useState(false);
-  const bs = React.createRef();
-    const fall = new Animated.Value(1);
-    const takePhotoFromCamera = () => {
-      ImagePicker.openCamera({
-        compressImageMaxWidth: 300,
-        compressImageMaxHeight: 300,
-        cropping: true,
-        compressImageQuality: 0.7
-      }).then(image => {
-        console.log(image);
-        setImage(image.path);
-        onCheck(true);
-        this.bs.current.snapTo(1);
-      });
-    }
+const PostItem = ({route, navigation}) => {
+  const username = useContext(AuthContext);
+  const [name, onChangeName] = useState("");
+  const [desc, onChangeDesc] = useState("");
+  const [image, setImage] = useState("");
+  const [check, onCheck] = useState(false);
+  // const bs = React.createRef();
+  //   const fall = new Animated.Value(1);
+  //   const takePhotoFromCamera = () => {
+  //     ImagePicker.openCamera({
+  //       compressImageMaxWidth: 300,
+  //       compressImageMaxHeight: 300,
+  //       cropping: true,
+  //       compressImageQuality: 0.7
+  //     }).then(image => {
+  //       setImage(image.path);
+  //       onCheck(true);
+  //     });
+  //     bs.current.snapTo(1);
+  //   }
   
-    const choosePhotoFromLibrary = () => {
-      ImagePicker.openPicker({
-        width: 300,
-        height: 300,
-        cropping: true,
-        compressImageQuality: 0.7
-      }).then(image => {
-        console.log(image);
-        onCheck(true);
-        setImage(image.path);
-        this.bs.current.snapTo(1);
-      });
-    }
-    const renderInner = () => (
-        <View style={styles.panel}>
-      <View style={{alignItems: 'center'}}>
-        <Text style={styles.panelTitle}>Upload Photo</Text>
-        <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
-        <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
-        <Text style={styles.panelButtonTitle}>Take Photo</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
-        <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.panelButton}
-        onPress={() => bs.current.snapTo(1)}>
-        <Text style={styles.panelButtonTitle}>Cancel</Text>
-      </TouchableOpacity>
-      </View>
-    </View>
-    )
+  //   const choosePhotoFromLibrary = () => {
+  //     ImagePicker.openPicker({
+  //       width: 300,
+  //       height: 300,
+  //       cropping: true,
+  //       compressImageQuality: 0.7
+  //     }).then(image => {
+  //       onCheck(true);
+  //       setImage(image.path);
+  //     });
+  //     bs.current.snapTo(1);
+  //   }
+  //   const renderInner = () => (
+  //       <View style={styles.panel}>
+  //     <View style={{alignItems: 'center'}}>
+  //       <Text style={styles.panelTitle}>Upload Photo</Text>
+  //       <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+  //       <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
+  //       <Text style={styles.panelButtonTitle}>Take Photo</Text>
+  //     </TouchableOpacity>
+  //     <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
+  //       <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+  //     </TouchableOpacity>
+  //     <TouchableOpacity
+  //       style={styles.panelButton}
+  //       onPress={() => bs.current.snapTo(1)}>
+  //       <Text style={styles.panelButtonTitle}>Cancel</Text>
+  //     </TouchableOpacity>
+  //     </View>
+  //   </View>
+  //   )
 
-    const renderHeader = () => (
-        <View style={styles.header}>
-            <View style={styles.panelHeader}>
-                <View style={styles.panelHandle}></View>
-            </View>
-        </View>
+  //   const renderHeader = () => (
+  //       <View style={styles.header}>
+  //           <View style={styles.panelHeader}>
+  //               <View style={styles.panelHandle}></View>
+  //           </View>
+  //       </View>
 
-    )
+  //   )
 
   return (
     <SafeAreaView style={styles.container}>
-      <BottomSheet
+      {/* <BottomSheet
         ref={bs}
         snapPoints={[330,0]}
         renderContent={renderInner}
@@ -104,7 +105,7 @@ const PostItem = () => {
         />
       <Animated.View style={{margin: 20, marginBottom: 50, 
         opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-    }}></Animated.View>
+    }}></Animated.View> */}
         <ScrollView style={styles.body}>
           <Text style={styles.title}>Name</Text>
           <TextInput 
@@ -122,7 +123,9 @@ const PostItem = () => {
           />
           <Text style={styles.title}>Image URL</Text>
           {!check && (
-          <TouchableOpacity style={[styles.btn,{backgroundColor:'lightgrey'}]} onPress={()=>bs.current.snapTo(0)}>
+          <TouchableOpacity style={[styles.btn,{backgroundColor:'lightgrey'}]} onPress={()=>{
+            // bs.current.snapTo(0)
+            }}>
             <Text style={{fontSize: 16}}>Choose Image</Text>
           </TouchableOpacity>
           )}
@@ -133,7 +136,30 @@ const PostItem = () => {
           )}
           <TouchableOpacity
           style={styles.btn}
-          onPress={() => Alert.alert("Hello")}
+          onPress={async() => {
+            if (name === "") {
+              Alert.alert('Name required!');
+            } else if (desc == "") {
+              Alert.alert('Description required!');
+            } else {
+              try {
+                const body = {name: name, lender: username, img: image, description: desc }
+                const r = await fetch(`http://${ip}:${port}/items/create`, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+                });
+                Alert.alert("Posted item");
+                navigation.navigate("HomeNavigator");
+              } catch (err) {
+                console.log(err.message);
+              }
+
+            }
+          }}
           >
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>

@@ -9,6 +9,8 @@ import ItemCard from './ItemCard';
 import ItemNavigator from './ItemNavigator';
 import ResultItem from '../Screen/ResultItem';
 import BorrowItem from '../Screen/BorrowItem';
+import RatingItem from '../Screen/RatingItem';
+import MultiForm from '../Screen/MultiForm';
 const HomeNavigator = () => {
   return (
       <HomeStack.Navigator>
@@ -35,6 +37,22 @@ const HomeNavigator = () => {
           component={BorrowItem}
           options={{
             title: 'Borrow Request',
+            headerTitleAlign: 'center'
+          }}
+        /> 
+        <HomeStack.Screen
+          name="MultiForm"
+          component={MultiForm}
+          options={{
+            title: 'Return Item',
+            headerTitleAlign: 'center'
+          }}
+        />
+        <HomeStack.Screen
+          name="RatingItem"
+          component={RatingItem}
+          options={{
+            title: 'Return Item',
             headerTitleAlign: 'center'
           }}
         /> 

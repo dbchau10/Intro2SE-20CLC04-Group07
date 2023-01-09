@@ -7,10 +7,10 @@ class BorrowRequestsController {
         try {
             const {id} = req.params;
             const borrowReq = await pool.query(
-                "SELECT request_id, item_id, borrower, to_char(start_date, 'dd/mm/yyyy') as start_date, to_char(end_date, 'dd/mm/yyyy') as end_date, reason FROM borrowrequest WHERE item_id=$1",
+                "SELECT b.request_id, b.item_id, b.borrower, to_char(b.start_date, 'dd/mm/yyyy') as start_date, to_char(b.end_date, 'dd/mm/yyyy') as end_date, b.reason, a.rating, a.avatar FROM borrowrequest as b INNER JOIN account as a on b.borrower = a.username WHERE b.item_id=$1",
                 [id]
             );
-            res.json(borrowReq.rows[0]);
+            res.json(borrowReq.rows);
         }
         catch (err){
             console.error(err.message);
@@ -20,7 +20,7 @@ class BorrowRequestsController {
         try {
             const {id} = req.params;
             const borrowReq = await pool.query(
-                "SELECT request_id, item_id, borrower, to_char(start_date, 'dd/mm/yyyy') as start_date, to_char(end_date, 'dd/mm/yyyy') as end_date, reason FROM borrowrequest WHERE request_id=$1",
+                "SELECT b.request_id, b.item_id, b.borrower, to_char(b.start_date, 'dd/mm/yyyy') as start_date, to_char(b.end_date, 'dd/mm/yyyy') as end_date, b.reason, a.rating, a.avatar FROM borrowrequest as b INNER JOIN account as a on b.borrower = a.username WHERE b.request_id=$1",
                 [id]
             );
             res.json(borrowReq.rows[0]);

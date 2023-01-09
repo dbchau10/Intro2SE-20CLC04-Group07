@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Dimensions, TouchableOpacity, FlatList } from 'react-native'
-import React from 'react'
-import { parameters } from '../global/style'
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Dimensions, TouchableOpacity, FlatList, Alert } from 'react-native'
+import React, {useContext} from 'react';
+import { AuthContext } from '../components/Tabs';
+import { parameters } from '../global/style';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import { commentData, ItemData, ip, port } from '../global/data';
@@ -9,11 +10,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ItemComment from '../components/ItemComment';
 import ItemCard from '../components/ItemCard';
 
-const RatingStar = () => {
-  
-}
-
 const Item = ({route, navigation}) => {
+  const username = useContext(AuthContext);
   const {item_id} = route.params;
   const [info, setInfo] = React.useState("");
   const [ratings, setRatings] = React.useState("");
@@ -79,7 +77,7 @@ const Item = ({route, navigation}) => {
         <Icon style={styles.eleIcon} name='star' size={16} color={info.rating>=4?'#F1CF1C':'lightgrey'}/>
         <Icon style={styles.eleIcon} name='star' size={16} color={info.rating>=5?'#F1CF1C':'lightgrey'}/>
         </View>
-        <View style={styles.itemStatusBox}>
+        <View style={info.status?[styles.itemStatusBox, {backgroundColor: green}]:[styles.itemStatusBox, {backgroundColor: '#EBEBEB'}]}>
                 <Text style={styles.itemStatusText}>{info.status?"Available":"Unavailable"}</Text>
             </View>
             </View>
@@ -93,7 +91,15 @@ const Item = ({route, navigation}) => {
               />
               <View>
             <Text style={styles.username}>{info.lender}</Text>
-            <TouchableOpacity style={styles.button} onPress={()=>console.log(ItemData)} onPress={()=>navigation.navigate('BorrowItem')}>
+            <TouchableOpacity style={styles.button} onPress={()=>{
+              if (info.status == 0) {
+                Alert.alert('Remind me later');
+              } else if (info.lender === username) {
+                Alert.alert("You cannot borrow your own item");
+              }else {
+                navigation.navigate('BorrowItem', {item_id: item_id});
+              }
+              }}>
                 <Text style={{fontWeight: 'bold', fontSize: 14}}>Borrow Now</Text>
             </TouchableOpacity>
         </View>
@@ -129,10 +135,10 @@ const Item = ({route, navigation}) => {
                     <Text style={{paddingVertical: 10}}>Sản phẩm khác</Text>
                     <FlatList
                     data={products}
-                    keyExtractor={product => product.item_id}
-                    renderItem={({ product }) =>
-                    <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: product.item_id})} >
-                     <ItemCard item={product} />
+                    keyExtractor={item => item.item_id}
+                    renderItem={({ item }) =>
+                    <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: item.item_id})} >
+                     <ItemCard item={item} />
                      </TouchableOpacity>
                      }
                  />

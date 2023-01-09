@@ -8,6 +8,7 @@ create table account(
     email varchar(30),
     phone varchar(11),
     gender char(1),
+    rating decimal(2,1),
     avatar varchar(50),
     primary key(username)
 );
@@ -61,8 +62,10 @@ create table return(
     return_id serial,
     item_id int,
     borrower varchar(20),
+    rating decimal(2,1),
     date date,
     contact varchar(100),
+    comment varchar(100),
     primary key(return_id)
 );
 
@@ -115,7 +118,7 @@ alter table borrowRequest
 	add constraint LK_borrowRequest_item
 	foreign key (item_id)
 	references item(item_id);
-
+    
 alter table notification
 	add constraint LK_notification_account
 	foreign key (username)

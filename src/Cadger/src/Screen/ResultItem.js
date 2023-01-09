@@ -39,7 +39,7 @@ const ResultItem = ({route, navigation}) => {
 
   const loadItem = async () => {
     try {
-      const r = await fetch(`http://${ip}:${port}/items/search?keyword=${keyword}&ratingFilter=${ratingFilter}&unavailable=${isSelected?0:1}`, {
+      const r = await fetch(`http://${ip}:${port}/items/search?keyword=${key}&ratingFilter=${ratingFilter}&unavailable=${isSelected?0:1}`, {
       method: 'GET',
       });
       const d = await r.json();
@@ -53,10 +53,6 @@ const ResultItem = ({route, navigation}) => {
   }
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-            <Text style={styles.headerLogo}>Cadger</Text>
-            <Text style={styles.headerName}>Result</Text>
-        </View>
         <View style={styles.searchContainer}>
             <View style={styles.searchBox}>
                 <TextInput
@@ -89,7 +85,7 @@ const ResultItem = ({route, navigation}) => {
             >
             <Text style={styles.btnText}>Previous</Text>
             </TouchableOpacity>
-            <Text style={styles.pageText}>{page}/{items.length/5+1}</Text>
+            <Text style={styles.pageText}>{page}/{parseInt(items.length/5)+1}</Text>
             <TouchableOpacity
             style={styles.btn}
             onPress={() => {
@@ -102,9 +98,9 @@ const ResultItem = ({route, navigation}) => {
           </View>
           <FlatList
             data={getItemInPage(items, page)}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.item_id}
             renderItem={({ item }) =>
-            <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: item.id})} >
+            <TouchableOpacity  onPress={() => navigation.navigate("Item", {item_id: item.item_id})} >
              <ItemCard item={item} />
              </TouchableOpacity>
              }

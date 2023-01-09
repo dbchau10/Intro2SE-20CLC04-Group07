@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { AuthContext } from '../components/Tabs';
 
 import {
   SafeAreaView,
@@ -18,16 +19,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {parameters} from '../global/style';
-const BorrowItem = () => {
-  const [reason, onChangeReason] = React.useState(null);
+import {ip, port} from '../global/data';
+const BorrowItem = ({route, navigation}) => {
+  const username = useContext(AuthContext);
+  const {item_id} = route.params;
+  const [reason, onChangeReason] = React.useState("");
   
   const name = 'Laptop cũ phục vụ mục đích học tập';
     const [date, onChangeDate] = useState(new Date());
   
     const [showBorrow, setShowBorrow] = useState(false);
     const [showReturn, setShowReturn] = useState(false);
-    const [borrowDate, onChangeBorrowDate] = useState(null);
-    const [returnDate, onChangeReturnDate] = useState(null);
+    const [borrowDate, onChangeBorrowDate] = useState("");
+    const [returnDate, onChangeReturnDate] = useState("");
 
     const onChangeBorrow = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -109,7 +113,37 @@ const BorrowItem = () => {
         </View>
           <TouchableOpacity
           style={styles.btn}
-          onPress={() => Alert.alert("Hello")}
+          onPress={async() => {
+            const x = new Date(borrowDate);
+            const y = new Date(returnDate);
+            if (reason == "") {
+              Alert.alert('Reason required!');
+            } else if (borrowDate === "" || returnDate === "") {
+              Alert.alert('Date required!');
+            } else if (x < Date.now() || y < Date.now()) {
+              Alert.alert('Date should be after today');
+            } 
+            else if (y < x) {
+              Alert.alert('Return date should be after borrow date!');
+            } else {
+              try {
+                const body = {item_id: item_id, borrower: username, start_date: borrowDate, end_date: returnDate, reason: reason};
+                const r = await fetch(`http://${ip}:${port}/borrowrequests/create`, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+                });
+                let d = await r.json();
+                Alert.alert('Sent borrow request!');
+                navigation.navigate('HomeNavigator');
+              } catch (err) {
+                console.log(err.message);
+              }
+            }
+          }}
           >
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>

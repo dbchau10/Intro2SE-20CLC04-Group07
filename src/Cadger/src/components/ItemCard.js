@@ -14,10 +14,10 @@ const green = '#98FB98';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-const ItemCard = ({ item, navigation }) => (
+const ItemCard = ({ item }) => (
   <View style={styles.itemBox}>
     <View style={styles.itemContentBox}>
-      <Image source={item.imagePath}
+      <Image source={item.img}
       style = {{ width: '90%', height: '80%', alignSelf: 'center', marginVertical: '8%', borderRadius: 10, resizeMode: 'center'}}
       />  
     </View>

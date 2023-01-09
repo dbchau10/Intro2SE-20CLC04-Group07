@@ -7,10 +7,10 @@ class ReturnsController {
         try {
             const { id } = req.params;
             const r = await pool.query(
-                "SELECT return_id, item_id, borrower, to_char(date, 'dd/mm/yyyy') as date, contact FROM return WHERE item_id = $1",
+                "SELECT r.return_id, r.item_id, r.borrower, to_char(r.date, 'dd/mm/yyyy') as date, r.contact, r.comment, r.rating, a.avatar FROM return as r INNER JOIN account as a on r.borrower = a.username WHERE r.item_id = $1",
                 [id]
             );
-            res.json(r.rows[0]);
+            res.json(r.rows);
         }
         catch (err){
             console.error(err.message);
@@ -21,8 +21,8 @@ class ReturnsController {
         try {
             const data = req.body;
             const r = await pool.query(
-                "INSERT INTO return(item_id, borrower, date, contact) VALUES($1, $2, $3, $4) RETURNING *",
-                [data.item_id, data.borrower, data.date, data.contact]
+                "INSERT INTO return(item_id, borrower, date, contact, comment, rating) VALUES($1, $2, $3, $4) RETURNING *",
+                [data.item_id, data.borrower, data.date, data.contact, data.comment, data.rating]
             );
             res.json(r.rows[0]);
         }

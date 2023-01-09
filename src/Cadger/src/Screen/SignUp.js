@@ -91,7 +91,6 @@ const SignUp = ({navigation}) => {
           <TextInput
             style={styles.input}
             onChangeText={validateEmail}
-            value={email}
           />
            {show && (
                 <Text style={styles.warning}>Email unapproriate</Text>
@@ -102,7 +101,6 @@ const SignUp = ({navigation}) => {
           <TextInput
             style={styles.input}
             onChangeText={validatePhone}
-            value={phone}
           />
           {showPhone && (
                 <Text style={styles.warning}>Phone unapproriate</Text>
